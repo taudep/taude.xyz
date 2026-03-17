@@ -1,3 +1,9 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://taude.xyz/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Welcome to taude.xyz'
+theme= 'archie'
+
+[module]
+  [[module.mounts]]
+    source = '/Users/tprekaski/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Vault/1 Projects/taude.xyz Blog/'
+    target = 'content'
