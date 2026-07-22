@@ -137,3 +137,23 @@
 .quote-single {
     max-width: 640px;
 }
+
+.ai-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    margin-bottom: var(--content-gap);
+    border-radius: 8px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    font-size: 14px;
+}
+
+.ai-banner-icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: var(--secondary);
+}
