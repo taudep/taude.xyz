@@ -7,10 +7,13 @@ everything else to plain text (cross-linking to other private vault
 notes doesn't make sense once published), turns ![[embeds]] into
 standard image syntax, fixes the quoted draft: "true" / "false" strings
 Obsidian Templater emits into real YAML booleans so Hugo's buildDrafts
-setting actually takes effect, and injects an explicit `slug` derived
-from the filename so Hugo's default urlize can't leak stray punctuation
+setting actually takes effect, injects an explicit `slug` derived from
+the filename so Hugo's default urlize can't leak stray punctuation
 (observed: a trailing "." in an Obsidian title produced a URL ending in
-a literal period) into a URL.
+a literal period) into a URL, and - when `original_date` is set, for
+backfilled content that predates this blog - overwrites `date` with it
+so the post sorts and displays with its true historical date rather
+than whenever it happened to be synced.
 """
 import re
 import sys
@@ -28,6 +31,8 @@ WIKILINK = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 DRAFT_STRING = re.compile(r'^(draft:\s*)"(true|false)"\s*$', re.MULTILINE)
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 HAS_SLUG = re.compile(r"^slug:\s*\S", re.MULTILINE)
+ORIGINAL_DATE = re.compile(r"^original_date:\s*(.*)$", re.MULTILINE)
+DATE_LINE = re.compile(r"^date:\s*.*$", re.MULTILINE)
 
 
 def resolve_wikilink(match: re.Match) -> str:
@@ -42,6 +47,26 @@ def clean_text(text: str) -> str:
     text = WIKILINK.sub(resolve_wikilink, text)
     text = DRAFT_STRING.sub(lambda m: f"{m.group(1)}{m.group(2)}", text)
     return text
+
+
+def _is_blank(raw: str) -> bool:
+    v = raw.strip()
+    return v in ("", '""', "''")
+
+
+def apply_original_date(text: str) -> str:
+    m = FRONTMATTER.match(text)
+    if not m:
+        return text
+    fm = m.group(1)
+    od = ORIGINAL_DATE.search(fm)
+    if not od or _is_blank(od.group(1)):
+        return text
+    new_fm, n = DATE_LINE.subn(f"date: {od.group(1).strip()}", fm, count=1)
+    if n == 0:
+        return text
+    fm_start, fm_end = m.start(1), m.end(1)
+    return text[:fm_start] + new_fm + text[fm_end:]
 
 
 def slugify(stem: str) -> str:
@@ -71,6 +96,7 @@ def main(paths: list[str]) -> None:
             continue
         original = path.read_text(encoding="utf-8")
         cleaned = clean_text(original)
+        cleaned = apply_original_date(cleaned)
         cleaned = ensure_slug(cleaned, path.stem)
         if cleaned != original:
             path.write_text(cleaned, encoding="utf-8")

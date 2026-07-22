@@ -80,6 +80,19 @@ them automatically (see **What the sync script does**, below). Actual image
 *files* are not copied anywhere yet; if you start embedding images, say so
 and we'll wire up copying attachments into `static/`.
 
+### Backfilling old content
+
+Every template has an `original_date` field (blank by default). Fill it in
+with the true historical publish date when backfilling something written
+elsewhere long ago (e.g. an old blog post), and the sync script overwrites
+`date` with it — the post sorts, dates, and shows up in RSS/archives at its
+real place in the timeline, not wherever `date` (the note's creation date)
+happened to land. The single-page view also picks up a "Backdated —
+originally published `<date>`, added to this blog later" banner whenever
+`original_date` is set, so it's visible to readers that the post predates
+this blog rather than looking freshly written. Leave it blank for anything
+written now — `date` (auto-filled by Templater) is used as-is.
+
 ## Publishing
 
 From the repo root:
@@ -132,6 +145,8 @@ gh run list --repo taudep/taude.xyz --limit 1
   reliably get treated as a boolean by Hugo, so without this fix a note could
   silently stay in draft (or silently escape draft status) regardless of what
   you intended.
+- Overwrites `date` with `original_date` when the latter is set and
+  non-blank — see **Backfilling old content**, above.
 - Injects an explicit `slug` into frontmatter (derived from the filename,
   lowercased, non-alphanumeric runs collapsed to a single dash) whenever one
   isn't already set. Hugo's own default urlize doesn't strip all stray
