@@ -61,13 +61,15 @@ from template," not "remember the exact frontmatter schema."
 
 ## The sync script
 
-A `scripts/publish.sh` script is the bridge between "notes in Obsidian"
-and "live on taude.xyz." It rsyncs markdown out of each vault folder into
-the matching `content/` folder in the Hugo repo, cleans up a few
-Obsidian-isms along the way — flattens `wikilinks`, converts
-`![embeds](embeds)` to normal markdown image syntax, and fixes the quoted
-`draft: "true"` string Templater writes into a real YAML boolean, since a
-quoted string doesn't reliably behave like a boolean to Hugo — then
+A [`scripts/publish.sh`](https://github.com/taudep/taude.xyz/blob/master/scripts/publish.sh)
+script is the bridge between "notes in Obsidian" and "live on taude.xyz."
+It rsyncs markdown out of each vault folder into the matching `content/`
+folder in the Hugo repo, cleans up a few
+[Obsidian-isms](https://github.com/taudep/taude.xyz/blob/master/scripts/clean_obsidian_links.py)
+along the way — flattens `wikilinks`, converts `![embeds](embeds)` to
+normal markdown image syntax, and fixes the quoted `draft: "true"`
+string Templater writes into a real YAML boolean, since a quoted string
+doesn't reliably behave like a boolean to Hugo — then
 builds the site locally with `hugo --minify` so a broken template fails
 on my machine instead of in CI. If the build's clean, it shows me what
 changed and asks before committing and pushing.
@@ -79,9 +81,11 @@ housekeeping.
 
 ## Making it repeatable
 
-The last piece was turning all of that into a Claude Code skill — a
-markdown file describing the whole flow (where content lives, how to run the sync, how
-to verify the GitHub Actions deploy actually succeeded) that lives in
-this repo and is symlinked into `~/.claude/skills`. So "publish my blog"
-is now a thing I can just say, in any session, and have it done the same
-way every time — instead of re-explaining the pipeline from scratch.
+The last piece was turning all of that into a
+[Claude Code skill](https://github.com/taudep/taude.xyz/blob/master/skills/publish-taude-blog/SKILL.md) —
+a markdown file describing the whole flow (where content lives, how to
+run the sync, how to verify the GitHub Actions deploy actually
+succeeded) that lives in this repo and is symlinked into
+`~/.claude/skills`. So "publish my blog" is now a thing I can just say,
+in any session, and have it done the same way every time — instead of
+re-explaining the pipeline from scratch.
