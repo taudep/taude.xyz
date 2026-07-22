@@ -8,6 +8,8 @@ VAULT_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Va
 
 cd "$REPO_DIR"
 
+TARGETS=(content/til content/posts content/quotes content/about.md)
+
 for section in til posts quotes; do
   src="$VAULT_DIR/$section"
   dest="content/$section"
@@ -19,7 +21,14 @@ for section in til posts quotes; do
   fi
 done
 
-python3 "$REPO_DIR/scripts/clean_obsidian_links.py" content/til content/posts content/quotes
+# Standalone single pages (not a section folder) live at the vault root.
+if [ -f "$VAULT_DIR/About.md" ]; then
+  cp "$VAULT_DIR/About.md" content/about.md
+else
+  echo "warning: $VAULT_DIR/About.md does not exist, skipping" >&2
+fi
+
+python3 "$REPO_DIR/scripts/clean_obsidian_links.py" "${TARGETS[@]}"
 
 echo
 echo "Building site to verify..."
@@ -28,18 +37,18 @@ hugo --minify
 
 echo
 echo "Changes to publish:"
-git status --short content/til content/posts content/quotes
+git status --short "${TARGETS[@]}"
 
-if git diff --quiet --cached -- content/til content/posts content/quotes && \
-   git diff --quiet -- content/til content/posts content/quotes && \
-   [ -z "$(git ls-files --others --exclude-standard content/til content/posts content/quotes)" ]; then
+if git diff --quiet --cached -- "${TARGETS[@]}" && \
+   git diff --quiet -- "${TARGETS[@]}" && \
+   [ -z "$(git ls-files --others --exclude-standard "${TARGETS[@]}")" ]; then
   echo "Nothing new to publish."
   exit 0
 fi
 
 read -r -p "Commit and push these changes? [y/N] " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
-  git add content/til content/posts content/quotes
+  git add "${TARGETS[@]}"
   msg="${1:-Publish from Obsidian $(date '+%Y-%m-%d %H:%M')}"
   git commit -m "$msg"
   git push origin master

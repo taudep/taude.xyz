@@ -23,13 +23,17 @@ def clean_text(text: str) -> str:
 
 
 def main(paths: list[str]) -> None:
-    for root in paths:
-        for path in Path(root).rglob("*.md"):
-            original = path.read_text(encoding="utf-8")
-            cleaned = clean_text(original)
-            if cleaned != original:
-                path.write_text(cleaned, encoding="utf-8")
-                print(f"cleaned: {path}")
+    files = []
+    for arg in paths:
+        p = Path(arg)
+        files.extend([p] if p.is_file() else p.rglob("*.md"))
+
+    for path in files:
+        original = path.read_text(encoding="utf-8")
+        cleaned = clean_text(original)
+        if cleaned != original:
+            path.write_text(cleaned, encoding="utf-8")
+            print(f"cleaned: {path}")
 
 
 if __name__ == "__main__":
