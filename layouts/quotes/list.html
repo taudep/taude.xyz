@@ -1,0 +1,25 @@
+{{- define "main" }}
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Content }}
+  <div class="post-content til-intro">{{ .Content }}</div>
+  {{- end }}
+</header>
+
+{{- $quotePages := where site.RegularPages "Section" "quotes" }}
+{{- $quotePages = $quotePages.ByDate.Reverse }}
+
+<div class="quote-list">
+  {{- range $quotePages }}
+  <article class="quote-entry">
+    <blockquote class="quote-body">{{ .Content }}</blockquote>
+    <div class="quote-attribution">
+      {{- with .Params.author }}<span class="quote-author">{{ . }}</span>{{ end }}
+      {{- with .Params.source }}<a class="quote-source" href="{{ . }}" target="_blank" rel="noopener">source</a>{{ end }}
+      <span class="quote-date">{{ .Date.Format "2 January 2006" }}</span>
+      <a class="quote-permalink" href="{{ .Permalink }}">#</a>
+    </div>
+  </article>
+  {{- end }}
+</div>
+{{- end }}

@@ -80,3 +80,60 @@
     margin: 0;
     font-size: 15px;
 }
+
+.quote-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-entry {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+}
+
+.quote-entry:first-child {
+    padding-top: 0;
+}
+
+.quote-body {
+    margin: 0 0 10px 0;
+    padding: 0 0 0 16px;
+    border-left: 3px solid var(--tertiary);
+    font-size: 20px;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--content);
+}
+
+.quote-body--single {
+    font-size: 26px;
+}
+
+.quote-body p {
+    margin: 0;
+}
+
+.quote-attribution {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 19px;
+    font-size: 13px;
+    color: var(--secondary);
+}
+
+.quote-author {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.quote-source,
+.quote-permalink {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+.quote-single {
+    max-width: 640px;
+}

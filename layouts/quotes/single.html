@@ -1,0 +1,10 @@
+{{- define "main" }}
+<article class="quote-single">
+  <blockquote class="quote-body quote-body--single">{{ .Content }}</blockquote>
+  <div class="quote-attribution">
+    {{- with .Params.author }}<span class="quote-author">{{ . }}</span>{{ end }}
+    {{- with .Params.source }}<a class="quote-source" href="{{ . }}" target="_blank" rel="noopener">source</a>{{ end }}
+    <span class="quote-date">{{ .Date.Format "2 January 2006" }}</span>
+  </div>
+</article>
+{{- end }}
