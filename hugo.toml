@@ -1,9 +1,38 @@
 baseURL = 'https://taude.xyz/'
 languageCode = 'en-us'
-title = 'Welcome to taude.xyz'
-theme= 'archie'
+title = 'taude.xyz'
+theme = 'archie'
+copyright = "© Todd"
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
 
-[module]
-  [[module.mounts]]
-    source = '/Users/tprekaski/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Vault/1 Projects/taude.xyz Blog/'
-    target = 'content'
+[params]
+  mode = "auto"
+  useCDN = false
+  subtitle = "Notes on AI and things I learn along the way"
+
+[[params.social]]
+  name = "GitHub"
+  icon = "github"
+  url = "https://github.com/taudep"
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "TIL"
+  url = "/til/"
+  weight = 2
+
+[[menu.main]]
+  name = "AI Articles"
+  url = "/ai-articles/"
+  weight = 3
+
+[[menu.main]]
+  name = "Tags"
+  url = "/tags"
+  weight = 4
