@@ -33,21 +33,30 @@ Notes live in the Obsidian vault under:
 ├── til/
 ├── posts/
 ├── quotes/
+├── ai-drafted/
 └── templates/
     ├── TIL.md
     ├── Blog Post.md
-    └── Quote.md
+    ├── Quote.md
+    └── AI Draft.md
 ```
 
-Each vault subfolder maps 1:1 to a `content/` section of the same name. Use
-the matching Templater template (via Obsidian's "Create new note from
-template" command) to start a new note — it stamps in the right frontmatter
-and moves the file into the correct folder automatically:
+Most vault subfolders map 1:1 to a `content/` section of the same name, but
+`ai-drafted/` is an exception — it's an organizational folder only, and its
+notes still sync into `content/posts/` (see `SECTION_MAP` in
+`scripts/publish.sh`). Use the matching Templater template (via Obsidian's
+"Create new note from template" command) to start a new note — it stamps in
+the right frontmatter and moves the file into the correct folder
+automatically:
 
 - **TIL.md** → `til/` — needs `tags` (topics, e.g. `["hugo", "git"]`).
 - **Blog Post.md** → `posts/` — needs `tags`.
 - **Quote.md** → `quotes/` — needs `author` and `source` (a URL); the quote
   text itself is the body, written as a markdown blockquote (`> ...`).
+- **AI Draft.md** → `ai-drafted/` (publishes as a regular post) — for
+  articles where AI wrote most of the content. Defaults to
+  `tags: ["ai-drafted"]` so it's transparent on the live site which posts
+  had substantial AI authorship.
 
 All three templates default to `draft: true`. Flip it to `draft: false` when
 a note is ready to go out — `buildDrafts = false` in `hugo.toml` means drafts
@@ -117,13 +126,17 @@ hugo server -D
 
 ## Maintenance notes
 
-- **Adding a fourth section**: create `content/<name>/`, add a menu entry in
+- **Adding a new section**: create `content/<name>/`, add a menu entry in
   `hugo.toml`, decide whether it needs a custom layout (`layouts/<name>/`) or
   can just use PaperMod's defaults, add an archetype at
-  `archetypes/<name>.md` for `hugo new` scaffolding, and add the section name
-  to the `for section in til posts quotes` loop in `scripts/publish.sh` (plus
-  a matching Obsidian vault folder and Templater template, if it's going to
-  be written there too).
+  `archetypes/<name>.md` for `hugo new` scaffolding, and add an entry to
+  `SECTION_MAP` in `scripts/publish.sh` (plus a matching Obsidian vault
+  folder and Templater template, if it's going to be written there too).
+- **Adding a vault-only folder** (organizational, publishes into an
+  existing section — e.g. `ai-drafted/` → `content/posts/`): just add an
+  entry to `SECTION_MAP` in `scripts/publish.sh` mapping the vault folder
+  name to the existing `content/` destination, plus a vault folder and
+  Templater template. No `hugo.toml` or layout changes needed.
 - **Theme upgrades**: `git submodule update --remote themes/PaperMod`, then
   rebuild locally and check the
   [PaperMod releases](https://github.com/adityatelange/hugo-PaperMod/releases)

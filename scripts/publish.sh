@@ -10,9 +10,15 @@ cd "$REPO_DIR"
 
 TARGETS=(content/til content/posts content/quotes content/about.md)
 
-for section in til posts quotes; do
+# vault_folder:content_dest — multiple vault folders can feed the same
+# content/ section (e.g. ai-drafted/ notes still publish as posts/).
+SECTION_MAP=(til:til posts:posts quotes:quotes ai-drafted:posts)
+
+for pair in "${SECTION_MAP[@]}"; do
+  section="${pair%%:*}"
+  dest_name="${pair##*:}"
   src="$VAULT_DIR/$section"
-  dest="content/$section"
+  dest="content/$dest_name"
   mkdir -p "$dest"
   if [ -d "$src" ]; then
     rsync -av --include="*.md" --exclude="*" "$src"/ "$dest"/
