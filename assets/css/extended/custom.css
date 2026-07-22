@@ -1,0 +1,82 @@
+.til-intro {
+    color: var(--secondary);
+    margin-bottom: var(--content-gap);
+}
+
+.til-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: calc(var(--content-gap) * 1.5);
+}
+
+.til-topic-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    font-size: 13px;
+    line-height: 1.6;
+    text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.til-topic-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.til-topic-count {
+    color: var(--tertiary-color, var(--secondary));
+    font-size: 11px;
+}
+
+.til-topic-pill--small {
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.til-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.til-entry {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.til-entry:first-child {
+    padding-top: 0;
+}
+
+.til-entry-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.til-date {
+    font-size: 13px;
+    color: var(--secondary);
+}
+
+.til-entry-title {
+    font-size: 20px;
+    margin: 0 0 6px 0;
+}
+
+.til-entry-title a {
+    color: var(--primary);
+}
+
+.til-entry-summary {
+    color: var(--secondary);
+    margin: 0;
+    font-size: 15px;
+}

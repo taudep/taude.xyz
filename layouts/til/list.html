@@ -1,0 +1,58 @@
+{{- define "main" }}
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+  {{- if .Content }}
+  <div class="post-content til-intro">{{ .Content }}</div>
+  {{- end }}
+</header>
+
+{{- $tilPages := where site.RegularPages "Section" "til" }}
+{{- $tilPages = $tilPages.ByDate.Reverse }}
+
+{{- $seen := slice }}
+{{- range $tilPages }}
+  {{- range .Params.tags }}
+    {{- if not (in $seen .) }}
+      {{- $seen = $seen | append . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- $tagData := slice }}
+{{- range $seen }}
+  {{- $tag := . }}
+  {{- $count := 0 }}
+  {{- range $tilPages }}
+    {{- if in .Params.tags $tag }}
+      {{- $count = add $count 1 }}
+    {{- end }}
+  {{- end }}
+  {{- $tagData = $tagData | append (dict "name" $tag "count" $count) }}
+{{- end }}
+{{- $tagData = sort $tagData "count" "desc" }}
+
+{{- if gt (len $tagData) 0 }}
+<nav class="til-topics" aria-label="Browse TILs by topic">
+  {{- range $tagData }}
+  <a class="til-topic-pill" href="{{ "/tags/" | relLangURL }}{{ .name | urlize }}/">{{ .name }} <span class="til-topic-count">{{ .count }}</span></a>
+  {{- end }}
+</nav>
+{{- end }}
+
+<div class="til-list">
+  {{- range $tilPages }}
+  {{- $topic := "" }}
+  {{- with .Params.tags }}{{ $topic = index . 0 }}{{ end }}
+  <article class="til-entry">
+    <div class="til-entry-meta">
+      {{- if $topic }}<a class="til-topic-pill til-topic-pill--small" href="{{ "/tags/" | relLangURL }}{{ $topic | urlize }}/">{{ $topic }}</a>{{ end }}
+      <span class="til-date">{{ .Date.Format "2 January 2006" }}</span>
+    </div>
+    <h2 class="til-entry-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+    {{- if (ne (.Param "hideSummary") true) }}
+    <p class="til-entry-summary">{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}…{{ end }}</p>
+    {{- end }}
+  </article>
+  {{- end }}
+</div>
+{{- end }}
