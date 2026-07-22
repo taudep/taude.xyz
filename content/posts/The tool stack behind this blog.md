@@ -3,6 +3,7 @@ title: "The tool stack behind this blog"
 date: 2026-07-22T16:00:00+03:00
 draft: false
 tags: ["ai-slop", "hugo", "obsidian", "claude-code"]
+slug: "the-tool-stack-behind-this-blog"
 ---
 
 This one's ai-slop, as advertised on the [about page](/about/) — I paired

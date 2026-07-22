@@ -3,6 +3,7 @@ title: Publishing from Obsidian
 date: 2026-07-22T09:00:00+03:00
 draft: false
 tags: ["hugo", "obsidian"]
+slug: "publishing-from-obsidian"
 ---
 
 Wired up a script that rsyncs markdown out of my taude.xyz Blog vault

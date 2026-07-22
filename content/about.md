@@ -3,6 +3,7 @@ title: "About"
 hideMeta: true
 ShowToc: false
 ShowBreadCrumbs: false
+slug: "about"
 ---
 
 Hi, I'm Taude (pronounced like Claude, but with a T).  I've been spelling my name this way on the internet since the mid-90s, and is only coincidently rhyming with Claude in this new AI world.

@@ -4,6 +4,7 @@ date: 2026-07-22
 draft: false
 tags:
   - meta
+slug: "welcome-back-taude"
 ---
 I can't believe it's been about 14 years since I was heavily involved in blogging and writing.  I think the energy it takes at being a manager as a [natural introvert](https://www.verywellmind.com/how-introverts-can-make-great-leaders-12013240) took away a lot of extracurricular activities like maintaining a blog, writing a lot of software after work, etc.  But this new world of assisted-AI really changes that.
 
