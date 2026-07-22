@@ -1,38 +1,56 @@
 baseURL = 'https://taude.xyz/'
 languageCode = 'en-us'
 title = 'taude.xyz'
-theme = 'archie'
+theme = 'PaperMod'
 copyright = "© Todd"
 pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
 [params]
-  mode = "auto"
-  useCDN = false
+  env = "production"
   subtitle = "Notes on AI and things I learn along the way"
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  disableSpecial1stPost = true
 
-[[params.social]]
-  name = "GitHub"
-  icon = "github"
-  url = "https://github.com/taudep"
+  [params.homeInfoParams]
+    Title = "Hi there \U0001F44B"
+    Content = "Notes on AI and things I learn along the way."
 
-[[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 1
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/taudep"
 
 [[menu.main]]
   name = "TIL"
   url = "/til/"
-  weight = 2
+  weight = 1
 
 [[menu.main]]
   name = "AI Articles"
   url = "/ai-articles/"
-  weight = 3
+  weight = 2
 
 [[menu.main]]
   name = "Tags"
-  url = "/tags"
+  url = "/tags/"
+  weight = 3
+
+[[menu.main]]
+  name = "Search"
+  url = "/search/"
   weight = 4
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
