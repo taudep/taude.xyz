@@ -2,24 +2,24 @@
 # Sync markdown from the Obsidian taude.xyz Blog folder into content/,
 # build the site to make sure nothing's broken, then commit and push.
 #
-# Usage: ./scripts/publish.sh [--no-preview] [commit message]
+# Usage: ./scripts/publish.sh [--preview] [commit message]
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VAULT_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Vault/1 Projects/taude.xyz Blog"
 
-PREVIEW=1
+PREVIEW=0
 COMMIT_MSG=""
 for arg in "$@"; do
   case "$arg" in
-    --no-preview) PREVIEW=0 ;;
+    --preview) PREVIEW=1 ;;
     *) COMMIT_MSG="$arg" ;;
   esac
 done
 
 cd "$REPO_DIR"
 
-TARGETS=(content/til content/posts content/quotes content/about.md)
+TARGETS=(content/til content/posts content/quotes content/about.md content/experiments.md)
 
 # vault_folder:content_dest — multiple vault folders can feed the same
 # content/ section (e.g. ai-drafted/ notes still publish as posts/).
@@ -39,11 +39,17 @@ for pair in "${SECTION_MAP[@]}"; do
 done
 
 # Standalone single pages (not a section folder) live at the vault root.
-if [ -f "$VAULT_DIR/About.md" ]; then
-  cp "$VAULT_DIR/About.md" content/about.md
-else
-  echo "warning: $VAULT_DIR/About.md does not exist, skipping" >&2
-fi
+STANDALONE_MAP=(About.md:content/about.md Experiments.md:content/experiments.md)
+
+for pair in "${STANDALONE_MAP[@]}"; do
+  src_name="${pair%%:*}"
+  dest_path="${pair##*:}"
+  if [ -f "$VAULT_DIR/$src_name" ]; then
+    cp "$VAULT_DIR/$src_name" "$dest_path"
+  else
+    echo "warning: $VAULT_DIR/$src_name does not exist, skipping" >&2
+  fi
+done
 
 python3 "$REPO_DIR/scripts/clean_obsidian_links.py" "${TARGETS[@]}"
 

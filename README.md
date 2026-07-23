@@ -16,13 +16,24 @@ published through a sync script.
   - `content/quotes/` — short quotes. Custom layout at `layouts/quotes/` skips
     the usual title/breadcrumbs/ToC and just renders the blockquote plus
     author/source/date.
-- **Standalone pages**: `content/about.md` is a single page, not a section —
-  it's synced separately from `About.md` at the vault root rather than from a
-  section folder (see `SECTION_MAP` vs. the standalone-file step in
-  `scripts/publish.sh`).
+- **Standalone pages**: `content/about.md` and `content/experiments.md` are
+  single pages, not sections — each syncs from its own same-named file at the
+  vault root (`About.md`, `Experiments.md`) rather than from a section
+  folder (see `STANDALONE_MAP` vs. `SECTION_MAP` in `scripts/publish.sh`).
 - **Search**: PaperMod's built-in Fuse.js search (`content/search.md` +
   `themes/PaperMod/layouts/index.json`) indexes every page on the site
   automatically — nothing to maintain when adding new sections.
+- **Homepage**: `layouts/index.html` overrides PaperMod's default list
+  template for the home page only, rendering a tight one-line-per-entry list
+  (date · section tag · title) across `til`/`posts`/`quotes`, instead of the
+  theme's default full-summary cards. Quotes have no title, so their row
+  label is built from a truncated snippet of the quote plus the author.
+- **Sidebar**: `layouts/baseof.html` overrides the theme's base template
+  sitewide to wrap `<main>` and a new `layouts/_partials/sidebar.html` in a
+  `.page-layout` flex container — every page gets a sidebar (bio blurb +
+  logo, linking to `/about/`, and a "Pinned" list). Stacks below the main
+  content under 900px width. See **Pinning articles**, below, for how to
+  add something to it.
 - **Deploy**: `.github/workflows/hugo.yml` builds the site with Hugo on every
   push to `master` and deploys straight to GitHub Pages (no `gh-pages` branch,
   no manual `public/` commits). `public/` and `resources/` are gitignored —
@@ -41,7 +52,8 @@ Notes live in the Obsidian vault under:
 ├── posts/
 ├── quotes/
 ├── ai-drafted/
-└── About.md
+├── About.md
+└── Experiments.md
 ```
 
 The four Templater templates that drive new notes (`TIL.md`, `Blog Post.md`,
@@ -75,9 +87,10 @@ All templates default to `draft: true`. Flip it to `draft: false` when a
 note is ready to go out — `buildDrafts = false` in `hugo.toml` means drafts
 never appear on the live site even if they get synced and pushed by mistake.
 
-`About.md`, at the vault root (not inside a section folder, and with no
-template — it's a singleton you just edit directly), is the source for the
-about page and syncs to `content/about.md`.
+`About.md` and `Experiments.md`, at the vault root (not inside a section
+folder, and with no template — each is a singleton you just edit directly),
+are the sources for the about and experiments pages, syncing to
+`content/about.md` and `content/experiments.md` respectively.
 
 Obsidian wikilinks (`[[Note]]`, `[[Note|alias]]`) and embeds (`![[image.png]]`)
 are fine to leave in your notes — the publish script resolves or flattens
@@ -98,12 +111,21 @@ originally published `<date>`, added to this blog later" banner whenever
 this blog rather than looking freshly written. Leave it blank for anything
 written now — `date` (auto-filled by Templater) is used as-is.
 
+### Pinning articles
+
+Add `pinned: true` to any note's frontmatter (til, post, or quote) and it
+shows up in the sidebar's "Pinned" list on every page except its own
+(`layouts/_partials/sidebar.html` filters out the current page). Sorted by
+date, most recent first — no separate ordering field. Leave the field out
+(or `false`) for everything else; it's not part of any template's default
+frontmatter, so add it by hand when you want to pin something.
+
 ## Publishing
 
 From the repo root:
 
 ```bash
-./scripts/publish.sh
+./scripts/publish.sh [--preview] [commit message]
 ```
 
 This:
@@ -113,14 +135,21 @@ This:
    **non-destructive** — it only adds/updates files, it never deletes
    anything from `content/`, even if a note is removed from the vault.
    Delete the file in `content/` yourself if a note should come down.)
-2. Copies the standalone `About.md` to `content/about.md` the same way
-   (a direct copy, not rsync, since it's a single file, not a folder).
+2. Copies each standalone page (`About.md` → `content/about.md`,
+   `Experiments.md` → `content/experiments.md`, per `STANDALONE_MAP`) the
+   same way (a direct copy, not rsync, since each is a single file, not a
+   folder).
 3. Cleans up Obsidian-specific syntax in the copied files
    (`scripts/clean_obsidian_links.py`) — see below.
 4. Runs `hugo --minify` locally so a broken template or bad frontmatter
    fails here, not in CI.
-5. Shows you a `git status` of what changed under `content/`.
-6. Prompts before doing anything else — answer `y` to commit and push, or
+5. Shows you a `git status` of what changed under `content/`. Exits here if
+   nothing changed.
+6. With `--preview` (off by default): starts `hugo server -D` on
+   `localhost:1313`, waits for you to look and press Enter, then kills the
+   server. Skip this for a quick publish where you don't need to check
+   anything first.
+7. Prompts before doing anything else — answer `y` to commit and push, or
    `N`/Enter to leave the synced files staged-but-uncommitted for you to
    review or amend by hand.
 
@@ -219,6 +248,9 @@ ln -sf ~/dev/taude.xyz/skills/<name> ~/.claude/skills/<name>
   (`HUGO_VERSION`). Keep it in rough sync with whatever's installed locally
   (`hugo version`) so a local `hugo --minify` is a reliable predictor of what
   CI will do.
+- **Sidebar bio text**: `params.sidebarBio` in `hugo.toml`. The avatar image
+  is `static/images/logo.webp`; swap the file to change it (referenced by
+  path in `layouts/_partials/sidebar.html`, no config needed).
 - **`public/` and `resources/` are gitignored on purpose** — CI is the only
   thing that should produce `public/`. If either ever ends up tracked again,
   `git rm -r --cached public resources` and confirm they're still in

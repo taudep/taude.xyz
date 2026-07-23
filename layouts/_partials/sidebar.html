@@ -1,0 +1,29 @@
+<aside class="sidebar">
+  <div class="sidebar-bio">
+    <img class="sidebar-avatar" src="{{ "images/logo.png" | relURL }}" alt="taude.xyz" />
+    {{- with site.Params.sidebarBio }}
+    <p class="sidebar-bio-text">{{ . }}</p>
+    {{- end }}
+    <a class="sidebar-bio-link" href="{{ "about/" | relLangURL }}">More about me &rarr;</a>
+    {{- with site.Params.socialIcons }}
+    {{ partial "social_icons.html" (dict "align" "left") }}
+    {{- end }}
+  </div>
+  {{- $pinnedLinks := site.Params.pinnedLinks }}
+  {{- $pinned := where site.RegularPages "Params.pinned" true }}
+  {{- $pinned = where $pinned "RelPermalink" "!=" .RelPermalink }}
+  {{- $pinned = $pinned.ByDate.Reverse }}
+  {{- if or (gt (len $pinnedLinks) 0) (gt (len $pinned) 0) }}
+  <div class="sidebar-pinned">
+    <h2 class="sidebar-heading">Pinned</h2>
+    <ul class="sidebar-pinned-list">
+      {{- range $pinnedLinks }}
+      <li><a href="{{ .url | relLangURL }}">{{ .title }}</a></li>
+      {{- end }}
+      {{- range $pinned }}
+      <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+      {{- end }}
+    </ul>
+  </div>
+  {{- end }}
+</aside>

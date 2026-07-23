@@ -1,3 +1,9 @@
+:root {
+    /* Anthropic's Claude clay/terracotta accent — used sparingly, just for
+       the two AI-drafted icons (homepage list + post banner). */
+    --ai-accent: #cc785c;
+}
+
 .til-intro {
     color: var(--secondary);
     margin-bottom: var(--content-gap);
@@ -138,6 +144,218 @@
     max-width: 640px;
 }
 
+/* Sitewide sidebar layout */
+
+.page-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--gap);
+    max-width: calc(var(--main-width) + 260px + var(--gap) * 3);
+    margin: auto;
+}
+
+.page-layout .main {
+    max-width: var(--main-width);
+    margin: 0;
+    flex: 1 1 var(--main-width);
+    min-width: 0;
+}
+
+.sidebar {
+    flex: 0 0 260px;
+    padding: var(--gap) var(--gap) var(--gap) 0;
+    position: sticky;
+    top: calc(var(--header-height) + var(--gap));
+}
+
+.sidebar-bio {
+    padding-bottom: var(--content-gap);
+    margin-bottom: var(--content-gap);
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-avatar {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+}
+
+.sidebar-bio-text {
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 8px 0;
+}
+
+.sidebar-bio-link {
+    font-size: 14px;
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.sidebar-bio .social-icons {
+    margin-top: 8px;
+    margin-left: -6px;
+}
+
+.sidebar-bio .social-icons a {
+    padding: 6px;
+}
+
+.sidebar-bio .social-icons a svg {
+    width: 18px;
+    height: 18px;
+}
+
+.sidebar-heading {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--secondary);
+    margin: 0 0 10px 0;
+}
+
+.sidebar-pinned-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-pinned-list a {
+    color: var(--content);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.sidebar-pinned-list a:hover {
+    color: var(--primary);
+}
+
+@media screen and (max-width: 900px) {
+    .page-layout {
+        flex-direction: column;
+        max-width: calc(var(--main-width) + var(--gap) * 2);
+    }
+
+    .sidebar {
+        position: static;
+        flex: 1 1 auto;
+        order: 2;
+        padding: 0 var(--gap) var(--gap) var(--gap);
+        width: 100%;
+    }
+
+    .page-layout .main {
+        flex: 1 1 auto;
+        order: 1;
+    }
+}
+
+/* Tight homepage list */
+
+.home-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-entry {
+    display: grid;
+    grid-template-columns: 52px 56px 1fr;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--content);
+}
+
+.home-entry:first-child {
+    padding-top: 0;
+}
+
+.home-entry:hover .home-entry-title {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.home-entry-date {
+    font-size: 13px;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+
+.home-entry-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+
+.home-entry-title-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    min-width: 0;
+}
+
+.home-entry-title {
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.home-entry-ai-icon {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    align-self: center;
+    color: var(--ai-accent);
+}
+
+.entry-ai-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--ai-accent);
+    vertical-align: -3px;
+}
+
+@media screen and (max-width: 480px) {
+    .home-entry {
+        grid-template-columns: 44px 1fr;
+        grid-template-areas:
+            "date title"
+            "tag  title";
+        row-gap: 2px;
+    }
+
+    .home-entry-date {
+        grid-area: date;
+    }
+
+    .home-entry-tag {
+        grid-area: tag;
+    }
+
+    .home-entry-title-wrap {
+        grid-area: title;
+    }
+
+    .home-entry-title {
+        white-space: normal;
+    }
+}
+
 .ai-banner {
     display: flex;
     align-items: center;
@@ -155,7 +373,7 @@
     flex: none;
     width: 18px;
     height: 18px;
-    color: var(--secondary);
+    color: var(--ai-accent);
 }
 
 .backdated-banner {

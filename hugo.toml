@@ -23,14 +23,27 @@ buildExpired = false
   ShowCodeCopyButtons = true
   ShowToc = true
   disableSpecial1stPost = true
+  sidebarBio = "Taude — notes on AI, software, and management, plus whatever else sticks."
 
-  [params.homeInfoParams]
-    Title = "Hi there \U0001F44B"
-    Content = "Notes on AI and things I learn along the way."
+  [[params.pinnedLinks]]
+    title = "Today I Learned..."
+    url = "/til/"
 
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/taudep"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/taudep"
+
+  [[params.socialIcons]]
+    name = "x"
+    url = "https://x.com/taudep"
+
+  [[params.socialIcons]]
+    name = "instagram"
+    url = "https://www.instagram.com/the.todd.p"
 
 [[menu.main]]
   name = "About"
@@ -38,29 +51,34 @@ buildExpired = false
   weight = 1
 
 [[menu.main]]
+  name = "My Experiments..."
+  url = "/experiments/"
+  weight = 2
+
+[[menu.main]]
   name = "TIL"
   url = "/til/"
-  weight = 2
+  weight = 3
 
 [[menu.main]]
   name = "Posts"
   url = "/posts/"
-  weight = 3
+  weight = 4
 
 [[menu.main]]
   name = "Quotes"
   url = "/quotes/"
-  weight = 4
+  weight = 5
 
 [[menu.main]]
   name = "Tags"
   url = "/tags/"
-  weight = 5
+  weight = 6
 
 [[menu.main]]
   name = "Search"
   url = "/search/"
-  weight = 6
+  weight = 7
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
