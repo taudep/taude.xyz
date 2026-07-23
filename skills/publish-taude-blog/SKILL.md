@@ -26,7 +26,10 @@ Obsidian vault, under:
 ## How to publish
 
 1. `cd ~/dev/taude.xyz`
-2. Run `./scripts/publish.sh`. This:
+2. Run `./scripts/publish.sh` (add `--preview` to pause with a local
+   `hugo server -D` running on `localhost:1313` before the commit/push
+   prompt, so there's a chance to look at the rendered site first — off by
+   default). This:
    - rsyncs `.md` files from each vault section folder into the matching
      `content/` folder (one-way, additive only — it never deletes files
      from `content/`, even if a note is removed from the vault)

@@ -190,12 +190,20 @@ gh run list --repo taudep/taude.xyz --limit 1
 
 ## Local preview
 
+`./scripts/publish.sh --preview` builds this in: it pauses between the build
+and the commit/push prompt with `hugo server -D` running on
+`localhost:1313`, so checking the site is part of the same flow rather than
+a separate manual step.
+
+To preview without going through the publish flow at all (e.g. just
+poking at a layout change with no Obsidian content involved):
+
 ```bash
 hugo server -D
 ```
 
-`-D` includes drafts, so you can preview unpublished notes at
-`localhost:1313` before flipping `draft: false`.
+`-D` includes drafts either way, so you can preview unpublished notes before
+flipping `draft: false`.
 
 ## Claude Code skills
 
