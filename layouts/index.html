@@ -1,6 +1,6 @@
 {{- define "main" }}
 
-{{- $pages := where site.RegularPages "Section" "in" (slice "til" "posts" "quotes") }}
+{{- $pages := where site.RegularPages "Section" "posts" }}
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
 {{- $paginator := .Paginate $pages }}
 {{- $aiTags := slice "ai-slop" "ai-drafted" }}
@@ -8,18 +8,8 @@
 <div class="home-list">
   {{- range $paginator.Pages }}
   {{- $label := .Title }}
-  {{- if eq .Section "quotes" }}
-    {{- $authorRaw := .Params.author }}
-    {{- $author := $authorRaw }}
-    {{- if reflect.IsSlice $authorRaw }}
-      {{- $author = delimit $authorRaw ", " }}
-    {{- end }}
-    {{- $snippet := .Plain | strings.TrimSpace | htmlUnescape | truncate 60 }}
-    {{- $label = printf "%s — %s" $snippet $author }}
-  {{- end }}
   <a class="home-entry" href="{{ .Permalink }}">
     <span class="home-entry-date">{{ .Date.Format "Jan 2" }}</span>
-    <span class="home-entry-tag home-entry-tag--{{ .Section }}">{{ .Section }}</span>
     <span class="home-entry-title-wrap">
       {{- if and .Params.tags (gt (len (.Params.tags | intersect $aiTags)) 0) }}
       <svg class="home-entry-ai-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" role="img"><title>AI-drafted</title>

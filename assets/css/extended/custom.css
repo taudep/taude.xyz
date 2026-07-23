@@ -269,7 +269,7 @@
 
 .home-entry {
     display: grid;
-    grid-template-columns: 52px 56px 1fr;
+    grid-template-columns: 52px 1fr;
     align-items: baseline;
     gap: 12px;
     padding: 10px 0;
@@ -288,14 +288,6 @@
 
 .home-entry-date {
     font-size: 13px;
-    color: var(--secondary);
-    white-space: nowrap;
-}
-
-.home-entry-tag {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
     color: var(--secondary);
     white-space: nowrap;
 }
@@ -333,22 +325,6 @@
 @media screen and (max-width: 480px) {
     .home-entry {
         grid-template-columns: 44px 1fr;
-        grid-template-areas:
-            "date title"
-            "tag  title";
-        row-gap: 2px;
-    }
-
-    .home-entry-date {
-        grid-area: date;
-    }
-
-    .home-entry-tag {
-        grid-area: tag;
-    }
-
-    .home-entry-title-wrap {
-        grid-area: title;
     }
 
     .home-entry-title {
