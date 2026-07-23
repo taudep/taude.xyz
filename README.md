@@ -33,7 +33,13 @@ published through a sync script.
   `.page-layout` flex container — every page gets a sidebar (bio blurb +
   logo, linking to `/about/`, and a "Pinned" list). Stacks below the main
   content under 900px width. See **Pinning articles**, below, for how to
-  add something to it.
+  add something to it. On the homepage only, the sidebar also shows an
+  "AI-drafted posts" callout with a toggle: unchecking it sets
+  `data-hide-ai="true"` on `<html>` (persisted in `localStorage`), and
+  `html[data-hide-ai="true"] .home-entry--ai { display: none }` in
+  `custom.css` hides those rows. `layouts/_partials/extend_head.html`
+  applies the stored preference before first paint (no flash of AI content
+  on reload).
 - **Deploy**: `.github/workflows/hugo.yml` builds the site with Hugo on every
   push to `master` and deploys straight to GitHub Pages (no `gh-pages` branch,
   no manual `public/` commits). `public/` and `resources/` are gitignored —

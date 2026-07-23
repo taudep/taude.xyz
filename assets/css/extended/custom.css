@@ -240,6 +240,75 @@
     color: var(--primary);
 }
 
+.sidebar-ai-callout {
+    margin-top: var(--content-gap);
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--code-bg);
+}
+
+.sidebar-ai-callout-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--secondary);
+    margin: 0 0 10px 0;
+}
+
+.ai-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--content);
+}
+
+.ai-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.ai-toggle-track {
+    flex: none;
+    width: 34px;
+    height: 20px;
+    background: var(--border);
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.15s ease;
+}
+
+.ai-toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--theme);
+    transition: transform 0.15s ease;
+}
+
+.ai-toggle input:checked+.ai-toggle-track {
+    background: var(--ai-accent);
+}
+
+.ai-toggle input:checked+.ai-toggle-track .ai-toggle-thumb {
+    transform: translateX(14px);
+}
+
+.ai-toggle input:focus-visible+.ai-toggle-track {
+    outline: 2px solid var(--ai-accent);
+    outline-offset: 2px;
+}
+
+html[data-hide-ai="true"] .home-entry--ai {
+    display: none;
+}
+
 @media screen and (max-width: 900px) {
     .page-layout {
         flex-direction: column;
