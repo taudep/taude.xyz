@@ -41,13 +41,18 @@ Notes live in the Obsidian vault under:
 ├── posts/
 ├── quotes/
 ├── ai-drafted/
-├── About.md
-└── templates/
-    ├── TIL.md
-    ├── Blog Post.md
-    ├── Quote.md
-    └── AI Draft.md
+└── About.md
 ```
+
+The four Templater templates that drive new notes (`TIL.md`, `Blog Post.md`,
+`Quote.md`, `AI Draft.md`) live at the vault-wide `Config/Templates/`
+folder, not inside the blog project folder — that's Templater's
+`templates_folder` setting (`.obsidian/plugins/templater-obsidian/data.json`),
+shared across everything in the vault, not something specific to this blog.
+Moving them there vs. keeping them in-project doesn't affect what they do:
+each template's `tp.file.move(...)` call uses an absolute vault-relative
+destination path (e.g. `1 Projects/taude.xyz Blog/til/`), independent of
+where the template file itself lives.
 
 Most vault subfolders map 1:1 to a `content/` section of the same name, but
 `ai-drafted/` is an exception — it's an organizational folder only, and its
