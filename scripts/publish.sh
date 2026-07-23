@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
 # Sync markdown from the Obsidian taude.xyz Blog folder into content/,
 # build the site to make sure nothing's broken, then commit and push.
+#
+# Usage: ./scripts/publish.sh [--no-preview] [commit message]
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VAULT_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Vault/1 Projects/taude.xyz Blog"
+
+PREVIEW=1
+COMMIT_MSG=""
+for arg in "$@"; do
+  case "$arg" in
+    --no-preview) PREVIEW=0 ;;
+    *) COMMIT_MSG="$arg" ;;
+  esac
+done
 
 cd "$REPO_DIR"
 
@@ -52,10 +63,21 @@ if git diff --quiet --cached -- "${TARGETS[@]}" && \
   exit 0
 fi
 
+if [ "$PREVIEW" -eq 1 ]; then
+  pkill -f "hugo server.*$REPO_DIR" 2>/dev/null || true
+  hugo server -D -p 1313 > /tmp/taude-xyz-preview.log 2>&1 &
+  PREVIEW_PID=$!
+  sleep 1
+  echo
+  echo "Preview running at http://localhost:1313/ (drafts included)."
+  read -r -p "Take a look, then press Enter here to continue... " _
+  kill "$PREVIEW_PID" 2>/dev/null || true
+fi
+
 read -r -p "Commit and push these changes? [y/N] " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
   git add "${TARGETS[@]}"
-  msg="${1:-Publish from Obsidian $(date '+%Y-%m-%d %H:%M')}"
+  msg="${COMMIT_MSG:-Publish from Obsidian $(date '+%Y-%m-%d %H:%M')}"
   git commit -m "$msg"
   git push origin master
   echo "Pushed. GitHub Actions will build and deploy to taude.xyz shortly."
