@@ -108,6 +108,35 @@ any note's frontmatter adds it to the sidebar's "Pinned" list
 triggers both a `date` overwrite (in `clean_obsidian_links.py`) and the
 backdated banner (in `post_meta.html`).
 
+**`clean_obsidian_links.py` internals worth knowing before editing it**:
+- `original_date` → `date` normalization only accepts a small set of
+  *unambiguous* formats (`YYYY-MM-DD`, `YYYY/M/D`, with optional
+  `THH:MM:SS±HH:MM`) — deliberately no bare `%m/%d/%Y` or `%d/%m/%Y`, since
+  which is which can't be inferred from the string alone and a silent
+  misread is worse than requiring an unambiguous one. An unparsable value
+  prints a warning and leaves `date` untouched rather than writing
+  something that would break the whole `hugo` build (this happened for
+  real with a clipper-imported quote's `2023/1/24`). If the source
+  frontmatter has no `date:` line at all (e.g. a clipper template that
+  only sets `published`/`created`), one is inserted rather than skipped —
+  Hugo's own fallback to those alternate field names would otherwise
+  silently ignore `original_date` if it ever disagreed with them.
+- `[[wikilinks]]` only resolve to a real link if the target is a key in
+  the `KNOWN_PAGES` dict (currently just `about` → `/about/`); anything
+  else flattens to plain text. Add an entry there when another actually-
+  published page starts getting linked to by name from vault notes.
+
+**Claude Code skills**: `skills/publish-taude-blog/` and
+`skills/write-ai-slop-article/` (the latter also ships
+`session_usage.py`, which sums token usage from a Claude Code session
+transcript — reads `~/.claude/projects/<slug>/<session-id>.jsonl`, and
+requires an explicit session id rather than guessing the newest file,
+since two transcripts in the same project directory can share an mtime).
+Both are symlinked into `~/.claude/skills/`, so keep their `SKILL.md`
+instructions in sync with actual script behavior when either changes —
+they're a second, easily-forgotten place the same facts (flags, file
+paths, section list) get restated.
+
 **Deploy**: `.github/workflows/hugo.yml` builds with a pinned Hugo version
 (`HUGO_VERSION` env var — keep roughly in sync with the locally-installed
 `hugo version` so local builds predict CI) and deploys straight to GitHub
