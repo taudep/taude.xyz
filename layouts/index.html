@@ -12,7 +12,7 @@
   </svg>
   <span class="ai-disclaimer-text">Posts written substantially by AI are labeled ai-slop. Hide them:</span>
   <label class="ai-toggle">
-    <input type="checkbox" id="ai-toggle-input" checked aria-label="Show AI-drafted posts">
+    <input type="checkbox" id="ai-toggle-input" aria-label="Hide AI-drafted posts">
     <span class="ai-toggle-track"><span class="ai-toggle-thumb"></span></span>
   </label>
 </div>
@@ -20,10 +20,9 @@
   (function () {
     var input = document.getElementById('ai-toggle-input');
     if (!input) return;
-    var hidden = localStorage.getItem('taude-hide-ai') === 'true';
-    input.checked = !hidden;
+    input.checked = localStorage.getItem('taude-hide-ai') === 'true';
     input.addEventListener('change', function () {
-      var hide = !input.checked;
+      var hide = input.checked;
       document.documentElement.toggleAttribute('data-hide-ai', hide);
       localStorage.setItem('taude-hide-ai', hide ? 'true' : 'false');
     });
