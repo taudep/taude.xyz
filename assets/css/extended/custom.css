@@ -240,19 +240,29 @@
     color: var(--primary);
 }
 
-.sidebar-ai-callout {
-    margin-top: var(--content-gap);
-    padding: 12px 14px;
+.ai-disclaimer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    margin-bottom: var(--content-gap);
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--code-bg);
 }
 
-.sidebar-ai-callout-text {
+.ai-disclaimer-text {
     font-size: 13px;
     line-height: 1.5;
     color: var(--secondary);
-    margin: 0 0 10px 0;
+}
+
+@media screen and (max-width: 480px) {
+    .ai-disclaimer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 .ai-toggle {

@@ -5,6 +5,27 @@
 {{- $paginator := .Paginate $pages }}
 {{- $aiTags := slice "ai-slop" "ai-drafted" }}
 
+<div class="ai-disclaimer">
+  <span class="ai-disclaimer-text">Posts written substantially by AI are labeled ai-slop. Hide them:</span>
+  <label class="ai-toggle">
+    <input type="checkbox" id="ai-toggle-input" checked aria-label="Show AI-drafted posts">
+    <span class="ai-toggle-track"><span class="ai-toggle-thumb"></span></span>
+  </label>
+</div>
+<script>
+  (function () {
+    var input = document.getElementById('ai-toggle-input');
+    if (!input) return;
+    var hidden = localStorage.getItem('taude-hide-ai') === 'true';
+    input.checked = !hidden;
+    input.addEventListener('change', function () {
+      var hide = !input.checked;
+      document.documentElement.toggleAttribute('data-hide-ai', hide);
+      localStorage.setItem('taude-hide-ai', hide ? 'true' : 'false');
+    });
+  })();
+</script>
+
 <div class="home-list">
   {{- range $paginator.Pages }}
   {{- $label := .Title }}

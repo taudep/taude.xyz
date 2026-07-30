@@ -26,29 +26,4 @@
     </ul>
   </div>
   {{- end }}
-  {{- if .IsHome }}
-  <div class="sidebar-ai-callout">
-    <p class="sidebar-ai-callout-text">
-      Some posts here are AI-drafted &mdash; built from my running LLM Wiki and always labeled as such. If you'd rather see just my own writing and thinking, flip this off.
-    </p>
-    <label class="ai-toggle">
-      <input type="checkbox" id="ai-toggle-input" checked>
-      <span class="ai-toggle-track"><span class="ai-toggle-thumb"></span></span>
-      <span class="ai-toggle-label">Show AI-drafted posts</span>
-    </label>
-  </div>
-  <script>
-    (function () {
-      var input = document.getElementById('ai-toggle-input');
-      if (!input) return;
-      var hidden = localStorage.getItem('taude-hide-ai') === 'true';
-      input.checked = !hidden;
-      input.addEventListener('change', function () {
-        var hide = !input.checked;
-        document.documentElement.toggleAttribute('data-hide-ai', hide);
-        localStorage.setItem('taude-hide-ai', hide ? 'true' : 'false');
-      });
-    })();
-  </script>
-  {{- end }}
 </aside>
