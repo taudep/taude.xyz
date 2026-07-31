@@ -11,9 +11,13 @@
     <span class="backdated-banner-text">Backdated — originally published {{ .Date.Format "2 January 2006" }}, added to this blog later.</span>
   </div>
   {{- end }}
-  <blockquote class="quote-body quote-body--single">{{ .Content }}</blockquote>
+  <div class="quote-content">{{ .Content }}</div>
   <div class="quote-attribution">
-    {{- with .Params.author }}<span class="quote-author">{{ . }}</span>{{ end }}
+    {{- with .Params.author }}
+    {{- $author := . }}
+    {{- if reflect.IsSlice $author }}{{ $author = delimit $author ", " }}{{ end }}
+    {{- with $.Params.source }}<a class="quote-author" href="{{ . }}" target="_blank" rel="noopener">{{ $author }}</a>{{ else }}<span class="quote-author">{{ $author }}</span>{{ end }}
+    {{- end }}
     {{- with .Params.source }}<a class="quote-source" href="{{ . }}" target="_blank" rel="noopener">source</a>{{ end }}
     <span class="quote-date">{{ .Date.Format "2 January 2006" }}</span>
   </div>

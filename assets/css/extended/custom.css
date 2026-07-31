@@ -102,8 +102,16 @@
     padding-top: 0;
 }
 
-.quote-body {
+.quote-content {
     margin: 0 0 10px 0;
+}
+
+.quote-content > :last-child {
+    margin-bottom: 0;
+}
+
+.quote-content blockquote {
+    margin: 0 0 14px 0;
     padding: 0 0 0 16px;
     border-left: 3px solid var(--tertiary);
     font-size: 20px;
@@ -112,12 +120,22 @@
     color: var(--content);
 }
 
-.quote-body--single {
-    font-size: 26px;
+.quote-content blockquote p {
+    margin: 0;
+    font-size: inherit;
+    font-style: inherit;
+    line-height: inherit;
 }
 
-.quote-body p {
-    margin: 0;
+.quote-content p {
+    margin: 0 0 12px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--content);
+}
+
+.quote-single .quote-content blockquote {
+    font-size: 26px;
 }
 
 .quote-attribution {
@@ -132,6 +150,14 @@
 .quote-author {
     font-weight: 600;
     color: var(--primary);
+}
+
+a.quote-author {
+    text-decoration: none;
+}
+
+a.quote-author:hover {
+    text-decoration: underline;
 }
 
 .quote-source,

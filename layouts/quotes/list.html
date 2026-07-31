@@ -11,10 +11,15 @@
 
 <div class="quote-list">
   {{- range $quotePages }}
+  {{- $page := . }}
   <article class="quote-entry">
-    <blockquote class="quote-body">{{ .Content }}</blockquote>
+    <div class="quote-content">{{ .Content }}</div>
     <div class="quote-attribution">
-      {{- with .Params.author }}<span class="quote-author">{{ . }}</span>{{ end }}
+      {{- with .Params.author }}
+      {{- $author := . }}
+      {{- if reflect.IsSlice $author }}{{ $author = delimit $author ", " }}{{ end }}
+      {{- with $page.Params.source }}<a class="quote-author" href="{{ . }}" target="_blank" rel="noopener">{{ $author }}</a>{{ else }}<span class="quote-author">{{ $author }}</span>{{ end }}
+      {{- end }}
       {{- with .Params.source }}<a class="quote-source" href="{{ . }}" target="_blank" rel="noopener">source</a>{{ end }}
       <span class="quote-date">{{ .Date.Format "2 January 2006" }}</span>
       <a class="quote-permalink" href="{{ .Permalink }}">#</a>

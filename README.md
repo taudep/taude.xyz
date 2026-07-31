@@ -82,8 +82,17 @@ automatically:
 
 - **TIL.md** → `til/` — needs `tags` (topics, e.g. `["hugo", "git"]`).
 - **Blog Post.md** → `posts/` — needs `tags`.
-- **Quote.md** → `quotes/` — needs `author` and `source` (a URL); the quote
-  text itself is the body, written as a markdown blockquote (`> ...`).
+- **Quote.md** → `quotes/` — needs `author` and `source` (a URL; if set,
+  both the `author` name and a separate "source" link point to it).
+  Write each quote as a markdown blockquote
+  (`> ...`) — a note can hold more than one if you're capturing several
+  from the same source/session — and anything written as a plain
+  paragraph (not a blockquote) renders as your own commentary instead,
+  visually distinct from the quoted text (`layouts/quotes/{list,single}.html`
+  render `.Content` directly rather than wrapping it in one blockquote, so
+  actual markdown blockquotes get the quote styling and everything else
+  doesn't). `author` can be a plain string or a YAML list (some clipper
+  imports emit it as a list) — either renders correctly.
 - **AI Draft.md** → `ai-drafted/` (publishes as a regular post) — for
   articles where AI wrote most of the content. Defaults to
   `tags: ["ai-drafted"]` so it's transparent on the live site which posts
