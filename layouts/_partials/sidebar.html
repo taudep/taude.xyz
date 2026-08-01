@@ -8,6 +8,12 @@
     {{- with site.Params.socialIcons }}
     {{ partial "social_icons.html" (dict "align" "left") }}
     {{- end }}
+    <a class="sidebar-iheartrss" href="https://iheartrss.com/">
+      <picture>
+        <source srcset="https://iheartrss.com/iheartrss-dark.svg" media="(prefers-color-scheme: dark)">
+        <img src="https://iheartrss.com/iheartrss.svg" alt="I love RSS" width="88" height="31">
+      </picture>
+    </a>
   </div>
   {{- $pinnedLinks := site.Params.pinnedLinks }}
   {{- $pinned := where site.RegularPages "Params.pinned" true }}

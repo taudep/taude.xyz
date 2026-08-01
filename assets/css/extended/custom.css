@@ -239,6 +239,15 @@ a.quote-author:hover {
     height: 18px;
 }
 
+.sidebar-iheartrss {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.sidebar-iheartrss img {
+    display: block;
+}
+
 .sidebar-heading {
     font-size: 13px;
     text-transform: uppercase;
