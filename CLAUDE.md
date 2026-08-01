@@ -83,6 +83,16 @@ one change":
 - `layouts/til/list.html`, `layouts/quotes/{list,single}.html` — custom
   layouts for those sections' non-default presentation (topic-pill row for
   til, blockquote-only rendering for quotes).
+- `layouts/_partials/head.html` — a rare full-file fork (194 lines,
+  including the theme's entire CSS/JS asset-bundling pipeline) rather than
+  a small targeted override, because Hugo has no partial-of-a-partial
+  mechanism - overriding one line means owning the whole file. The only
+  actual change is the RSS `<link>` line: the theme's default `title`
+  there is just the bare output-format name ("RSS"), so it's replaced
+  with `"taude.xyz Blog {{ now.Year }}"` for the RSS format specifically
+  (JSON and any other output format still gets `.Name` as before). Diff
+  against `themes/PaperMod/layouts/_partials/head.html` before any PaperMod
+  upgrade to catch upstream changes this fork won't have picked up.
 
 **CSS**: all custom styling lives in `assets/css/extended/custom.css`,
 which Hugo auto-concatenates after the theme's core CSS (any
