@@ -9,10 +9,8 @@
     {{ partial "social_icons.html" (dict "align" "left") }}
     {{- end }}
     <a class="sidebar-iheartrss" href="https://iheartrss.com/">
-      <picture>
-        <source srcset="https://iheartrss.com/iheartrss-dark.svg" media="(prefers-color-scheme: dark)">
-        <img src="https://iheartrss.com/iheartrss.svg" alt="I love RSS" width="88" height="31">
-      </picture>
+      <img class="sidebar-iheartrss-light" src="https://iheartrss.com/iheartrss.svg" alt="I love RSS" width="88" height="31">
+      <img class="sidebar-iheartrss-dark" src="https://iheartrss.com/iheartrss-dark.svg" alt="I love RSS" width="88" height="31">
     </a>
   </div>
   {{- $pinnedLinks := site.Params.pinnedLinks }}

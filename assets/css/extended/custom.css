@@ -244,7 +244,20 @@ a.quote-author:hover {
     margin-top: 10px;
 }
 
-.sidebar-iheartrss img {
+.sidebar-iheartrss-light,
+.sidebar-iheartrss-dark {
+    display: block;
+}
+
+.sidebar-iheartrss-dark {
+    display: none;
+}
+
+:root[data-theme="dark"] .sidebar-iheartrss-light {
+    display: none;
+}
+
+:root[data-theme="dark"] .sidebar-iheartrss-dark {
     display: block;
 }
 
