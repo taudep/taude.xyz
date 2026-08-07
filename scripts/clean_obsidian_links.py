@@ -10,10 +10,17 @@ Obsidian Templater emits into real YAML booleans so Hugo's buildDrafts
 setting actually takes effect, injects an explicit `slug` derived from
 the filename so Hugo's default urlize can't leak stray punctuation
 (observed: a trailing "." in an Obsidian title produced a URL ending in
-a literal period) into a URL, and - when `original_date` is set, for
-backfilled content that predates this blog - overwrites `date` with it
-so the post sorts and displays with its true historical date rather
-than whenever it happened to be synced.
+a literal period) into a URL, when `original_date` is set for backfilled
+content that predates this blog overwrites `date` with it so the post
+sorts and displays with its true historical date rather than whenever
+it happened to be synced, and warns (without modifying anything) about
+any leftover `<% ... %>` Templater syntax - a sign the note bypassed
+Templater entirely (e.g. typed/pasted by hand instead of created via
+"Create new note from template"), which showed up for real as a
+literal, unparsed `date: <% tp.file.creation_date(...) %>` that broke
+the whole `hugo` build, and separately as a `<% tp.file.move(...) %>`
+line that would otherwise have silently published as garbage text in
+the post body.
 """
 from __future__ import annotations
 
@@ -29,6 +36,7 @@ KNOWN_PAGES = {
     "about": "/about/",
 }
 
+TEMPLATER_TAG = re.compile(r"<%.*?%>", re.DOTALL)
 WIKILINK_EMBED = re.compile(r"!\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 WIKILINK = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
 DRAFT_STRING = re.compile(r'^(draft:\s*)"(true|false)"\s*$', re.MULTILINE)
@@ -105,6 +113,15 @@ def apply_original_date(text: str, path: Path) -> str:
     return text[:fm_start] + new_fm + text[fm_end:]
 
 
+def warn_stray_templater_tags(text: str, path: Path) -> None:
+    matches = TEMPLATER_TAG.findall(text)
+    if not matches:
+        return
+    print(f"warning: {path}: found leftover Templater syntax not evaluated by "
+          f"Templater - this note likely bypassed \"Create new note from "
+          f"template\": {matches}", file=sys.stderr)
+
+
 def slugify(stem: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", stem.lower())
     return slug.strip("-")
@@ -134,6 +151,7 @@ def main(paths: list[str]) -> None:
         cleaned = clean_text(original)
         cleaned = apply_original_date(cleaned, path)
         cleaned = ensure_slug(cleaned, path.stem)
+        warn_stray_templater_tags(cleaned, path)
         if cleaned != original:
             path.write_text(cleaned, encoding="utf-8")
             print(f"cleaned: {path}")
