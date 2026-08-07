@@ -51,7 +51,7 @@ buildExpired = false
   weight = 1
 
 [[menu.main]]
-  name = "My Experiments..."
+  name = "Experiments"
   url = "/experiments/"
   weight = 2
 

@@ -288,6 +288,60 @@ a.quote-author:hover {
     color: var(--primary);
 }
 
+.ai-tips-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: var(--content-gap);
+    border: 1px solid var(--ai-accent);
+    border-radius: 8px;
+    background: var(--code-bg);
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.ai-tips-feature:hover {
+    background: var(--entry);
+}
+
+.ai-tips-feature-icon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    color: var(--ai-accent);
+}
+
+.ai-tips-feature-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.ai-tips-feature-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--content);
+}
+
+.ai-tips-feature-desc {
+    font-size: 13px;
+    color: var(--secondary);
+}
+
+.ai-tips-feature-arrow {
+    flex: none;
+    color: var(--ai-accent);
+    font-size: 18px;
+}
+
+@media screen and (max-width: 480px) {
+    .ai-tips-feature-desc {
+        display: none;
+    }
+}
+
 .ai-disclaimer {
     display: flex;
     align-items: center;
