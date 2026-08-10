@@ -51,6 +51,31 @@ for pair in "${STANDALONE_MAP[@]}"; do
   fi
 done
 
+# Copy images referenced in synced markdown files.
+# Obsidian stores attachments in a central folder, not alongside notes,
+# so rsync alone won't find them. Search the whole vault for each referenced image.
+OBSIDIAN_ROOT="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Todd's Obsidian Vault"
+while IFS= read -r -d '' md_file; do
+  dest_dir="$(dirname "$md_file")"
+  # Extract local image references: ![alt](filename.ext) — skip http/https URLs
+  grep -oE '!\[[^]]*\]\([^)]+\)' "$md_file" 2>/dev/null \
+    | grep -oE '\([^)]+\)' | tr -d '()' \
+    | grep -iv '^https\?://' \
+    | grep -iE '\.(png|jpg|jpeg|gif|webp|svg)$' \
+    | while IFS= read -r img_name; do
+        dest_img="$dest_dir/$img_name"
+        if [ ! -f "$dest_img" ]; then
+          img_path="$(find "$OBSIDIAN_ROOT" -name "$img_name" 2>/dev/null | head -1)"
+          if [ -n "$img_path" ]; then
+            cp "$img_path" "$dest_img"
+            echo "  image: $img_name -> $dest_dir/"
+          else
+            echo "warning: image not found in vault: $img_name" >&2
+          fi
+        fi
+      done
+done < <(find content/til content/posts content/quotes -name "*.md" -print0 2>/dev/null)
+
 python3 "$REPO_DIR/scripts/clean_obsidian_links.py" "${TARGETS[@]}"
 
 echo
