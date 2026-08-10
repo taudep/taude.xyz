@@ -41,24 +41,14 @@
   })();
 </script>
 
-<div class="home-list">
+<ul class="post-list">
   {{- range $paginator.Pages }}
-  {{- $label := .Title }}
   {{- $isAI := and .Params.tags (gt (len (.Params.tags | intersect $aiTags)) 0) }}
-  <a class="home-entry{{ if $isAI }} home-entry--ai{{ end }}" href="{{ .Permalink }}">
-    <span class="home-entry-date">{{ .Date.Format "Jan 2" }}</span>
-    <span class="home-entry-title-wrap">
-      {{- if $isAI }}
-      <svg class="home-entry-ai-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" role="img"><title>AI-drafted</title>
-        <path d="M12 2c.9 3.6 1.4 4.1 5 5-3.6.9-4.1 1.4-5 5-.9-3.6-1.4-4.1-5-5 3.6-.9 4.1-1.4 5-5z" />
-        <path d="M19 14c.45 1.8.7 2.05 2.5 2.5-1.8.45-2.05.7-2.5 2.5-.45-1.8-.7-2.05-2.5-2.5 1.8-.45 2.05-.7 2.5-2.5z" />
-      </svg>
-      {{- end }}
-      <span class="home-entry-title">{{ $label }}</span>
-    </span>
-  </a>
+  <li class="post-list-entry{{ if $isAI }} post-list-entry--ai{{ end }}">
+    <a href="{{ .Permalink }}">{{- if $isAI }}<svg class="home-entry-ai-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" role="img"><title>AI-drafted</title><path d="M12 2c.9 3.6 1.4 4.1 5 5-3.6.9-4.1 1.4-5 5-.9-3.6-1.4-4.1-5-5 3.6-.9 4.1-1.4 5-5z" /><path d="M19 14c.45 1.8.7 2.05 2.5 2.5-1.8.45-2.05.7-2.5 2.5-.45-1.8-.7-2.05-2.5-2.5 1.8-.45 2.05-.7 2.5-2.5z" /></svg> {{- end }}{{- .Title }}</a><span class="post-list-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+  </li>
   {{- end }}
-</div>
+</ul>
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">

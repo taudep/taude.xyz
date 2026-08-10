@@ -1,4 +1,17 @@
+/* fogus.me-inspired typographic density */
+body {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+
 :root {
+    --gap: 16px;
+    --content-gap: 14px;
     /* Anthropic's Claude clay/terracotta accent — used sparingly, just for
        the two AI-drafted icons (homepage list + post banner). */
     --ai-accent: #cc785c;
@@ -424,8 +437,34 @@ a.quote-author:hover {
     outline-offset: 2px;
 }
 
-html[data-hide-ai="true"] .home-entry--ai {
+html[data-hide-ai="true"] .home-entry--ai,
+html[data-hide-ai="true"] .post-list-entry--ai {
     display: none;
+}
+
+/* Bullet post list (homepage + posts section) */
+
+.post-list {
+    list-style: square;
+    padding-left: 1.5ch;
+    margin: 0;
+}
+
+.post-list-entry {
+    padding: 2px 0;
+    line-height: 1.5;
+}
+
+.post-list-entry a {
+    color: var(--primary);
+}
+
+.post-list-date {
+    font-style: italic;
+    color: var(--secondary);
+    font-size: 13px;
+    margin-left: 0.75ch;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 900px) {
