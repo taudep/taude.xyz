@@ -73,7 +73,10 @@ while IFS= read -r -d '' md_file; do
             echo "warning: image not found in vault: $img_name" >&2
           fi
         fi
-      done
+      done || true
+  # The grep chain above exits non-zero when a file has no images (the
+  # normal case) — `|| true` on the whole pipeline keeps that from
+  # tripping `set -e` and killing the script outright.
 done < <(find content/til content/posts content/quotes -name "*.md" -print0 2>/dev/null)
 
 python3 "$REPO_DIR/scripts/clean_obsidian_links.py" "${TARGETS[@]}"
