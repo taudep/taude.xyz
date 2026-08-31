@@ -12,6 +12,13 @@ buildDrafts = false
 buildFuture = false
 buildExpired = false
 
+[markup.goldmark.renderer]
+  # Needed for raw <pre class="mermaid"> diagram blocks in post content —
+  # Chroma has no mermaid lexer, so a ```mermaid fence collapses to a
+  # generic "fallback" class we can't target. All content here is mine,
+  # not third-party input, so unsafe raw HTML passthrough is fine.
+  unsafe = true
+
 [params]
   env = "production"
   subtitle = "Notes on AI and things I learn along the way"

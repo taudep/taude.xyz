@@ -8,3 +8,33 @@
     }
   })();
 </script>
+<script type="module">
+  // Renders <pre class="mermaid"> diagram blocks (see posts for the
+  // pattern) and re-renders them on theme toggle so colors stay correct.
+  // Chroma has no mermaid lexer, so ```mermaid fences can't be targeted
+  // reliably — raw <pre class="mermaid"> HTML is the supported form
+  // (needs markup.goldmark.renderer.unsafe = true in hugo.toml).
+  const blocks = document.querySelectorAll('pre.mermaid');
+  if (blocks.length) {
+    const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+    const sources = Array.from(blocks, (el) => el.textContent);
+
+    function render() {
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: isDark ? 'dark' : 'neutral',
+        fontFamily: "'JetBrains Mono', monospace",
+      });
+      blocks.forEach((el, i) => {
+        el.removeAttribute('data-processed');
+        el.textContent = sources[i];
+      });
+      mermaid.run({ nodes: blocks });
+    }
+
+    render();
+    document.getElementById('theme-toggle')?.addEventListener('click', () => setTimeout(render, 0));
+  }
+</script>

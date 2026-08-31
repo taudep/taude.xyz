@@ -598,3 +598,20 @@ html[data-hide-ai="true"] .post-list-entry--ai {
     height: 18px;
     color: var(--secondary);
 }
+
+/* Mermaid architecture diagrams (see extend_head.html for the renderer) */
+
+pre.mermaid {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: var(--content-gap);
+    margin: var(--content-gap) 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--code-bg);
+}
+
+pre.mermaid svg {
+    max-width: 100%;
+}
