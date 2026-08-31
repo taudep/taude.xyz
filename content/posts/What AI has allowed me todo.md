@@ -8,7 +8,6 @@ tags:
 slug: "what-ai-has-allowed-me-todo"
 ---
 
-<% tp.file.move("1 Projects/taude.xyz Blog/posts/" + tp.file.title) %>
 * Setup Nix Darwin, complete with options to segratage my work computer
 * Build silly dumb quality of life apps
 * Operationalize a lot of backlogged projects at work: a cli for all the endpoints I manage (26 unique service deployments most with a panoply of APIs)
@@ -16,3 +15,5 @@ slug: "what-ai-has-allowed-me-todo"
 
 
 LLMS are great for writing, less useful for communicating effectively and thinking.  Writing is thinking and why Amazon's one-pager is such a successful way
+
+<% tp.file.move("1 Projects/taude.xyz Blog/posts/" + tp.file.title) %>

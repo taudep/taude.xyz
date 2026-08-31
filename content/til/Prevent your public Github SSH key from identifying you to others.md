@@ -12,7 +12,7 @@ Mitchell Hashimoto (of Ghostty and HashiCorp fame) started a new company Superlo
 
 Plus, accessing their job board is pretty clever.  Totally makes sense for a company building a multiplexer.
 
-![Screenshot 2026-08-07 at 1.20.45 PM.png](Screenshot 2026-08-07 at 1.20.45 PM.png)
+	![Screenshot 2026-08-07 at 1.20.45 PM.png](Screenshot 2026-08-07 at 1.20.45 PM.png)
 
 What did I learn? Well, [Someone on hackerNews](https://news.ycombinator.com/item?id=49098965#49108106) recommended to stay anonymous, use:
 ```bash
