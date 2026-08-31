@@ -60,7 +60,43 @@ happened. If you state a token total or estimated cost, note that
 cache-read tokens are billed far cheaper than fresh input tokens, so a
 raw sum of all categories overstates cost if read as-is.
 
-## 4. Publish it
+## 4. Add an architecture diagram, if one earns its place
+
+If the session built or changed something with a real shape — a
+pipeline, a client/server split, a data flow across a few components —
+a small Mermaid flowchart usually communicates it faster than a
+paragraph. Skip it for posts that don't have that shape (a config
+tweak, a one-off fix); not every recap needs one.
+
+The site already has Mermaid wired in (`layouts/_partials/extend_head.html`
+in the taude.xyz repo) — it renders in the site's own colors, follows
+light/dark theme toggling automatically, and needs no per-post setup.
+Just write the diagram straight into the post's markdown as raw HTML:
+
+```html
+<pre class="mermaid">
+flowchart TD
+  A[browser history] --> B[archivore run]
+  B <--> C[archivore-queue D1]
+  B --> D[output_dir vault]
+</pre>
+```
+
+**Must be `<pre class="mermaid">`, not a ` ```mermaid ` fence.** Hugo's
+Chroma highlighter has no mermaid lexer, so a fenced code block
+collapses to a generic `language-fallback` class that can't be targeted
+reliably — raw HTML is the only form that survives intact. (This is why
+`markup.goldmark.renderer.unsafe = true` is set in `hugo.toml` — raw
+HTML passthrough, safe here since every post is Todd's own content, not
+third-party input.)
+
+Keep the diagram to the same handful of boxes a prose "reduced to its
+essentials" sentence would use — this is a recap post, not documentation;
+a sprawling diagram works against the terse tone. `flowchart TD`
+(top-down) reads best for a short pipeline; reach for `flowchart LR`
+only if the shape is genuinely more left-to-right than top-down.
+
+## 5. Publish it
 
 Same flow as the `publish-taude-blog` skill:
 1. Write the post as a new file in the Obsidian vault's `ai-drafted/`
