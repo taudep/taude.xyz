@@ -122,9 +122,9 @@ op-env() {
   done <<< "$content"
 }
 
-# Convenience wrapper: sets DISC_SECURE, loads secrets, re-sources prompt config.
-disc-secure() {
-  export DISC_SECURE=true
+# Convenience wrapper: sets TAUDE_SECURE, loads secrets, re-sources prompt config.
+taude-secure() {
+  export TAUDE_SECURE=true
   op-env
   source ~/.p10k.zsh
 }
@@ -161,7 +161,7 @@ The tracked `~/.zshrc` just sources it at the end:
 
 **Work Mac (1Password)**
 ```zsh
-disc-secure
+taude-secure
 # Touch ID prompt appears if the CLI session has expired
 #   exported: GITHUB_TOKEN
 #   exported: ANTHROPIC_API_KEY
@@ -171,7 +171,7 @@ disc-secure
 **Personal Mac (Bitwarden)**
 ```zsh
 bw-unlock      # enter master password once per session
-disc-secure    # reads the note and exports all env vars
+taude-secure    # reads the note and exports all env vars
 ```
 
 ## Security Properties
@@ -219,8 +219,6 @@ echo 'export PM_NOTE_NAME=your-note-name' >> ~/.zshrc.local
 2. Share the relevant password manager item with them through your password manager's sharing feature.
 3. They create their `~/.zshrc.local` with `PM_NOTE_NAME` pointing to their copy of the note.
 
-No credentials over Slack or email.
-
 ## Why Not direnv or dotenv?
 
-Those tools are great, but they still write secrets to a file on disk (`.envrc`, `.env`). If that file ends up in a repo, gets synced to cloud storage, or sits on a lost laptop, the secrets are exposed. This approach keeps the canonical secret store entirely inside your password manager — the only thing on disk is the shell function that knows *where* to look.
+Those tools are great, but they still write secrets to a file on disk (`.envrc`, `.env`). If that file ends up in a repo, gets synced to cloud storage, or sits on a lost laptop, or Claude slurps it up, the secrets are exposed. This approach keeps the canonical secret store entirely inside your password manager — the only thing on disk is the shell function that knows *where* to look.
