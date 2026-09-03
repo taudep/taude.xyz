@@ -1,11 +1,12 @@
 ---
-title: <% tp.file.title %>
+title: Local Dev Secret Management with 1Password and Bitwarden
 date: 2026-09-01
 original_date: 2026-09-01
 draft: false
 tags:
   - ai-drafted
   - cli-tip
+  - ai-slop
 slug: "local-dev-secret-management-with-1password-and-bitwarden"
 ---
 Most developers have a graveyard of dotfiles, `.env` files, and Slack DMs containing tokens that were supposed to be temporary. This post describes the pattern I use to keep all local dev secrets in a password manager and inject them into my shell on demand — nothing sensitive ever touches disk.
