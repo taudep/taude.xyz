@@ -38,10 +38,25 @@ claims and completes items against one shared queue, so nothing gets
 fetched twice. Four network calls per run keep every machine in sync,
 regardless of how many articles were captured.
 
-Reduced to its essentials, the architecture is a straight line: browser
-history feeds `archivore run`, which coordinates against the shared
-queue, writes Markdown into the vault, and hands the result to qmd for
-search.
+Reduced to its essentials, this is what running it on several machines
+looks like: each one scans its own browser history independently, but
+they all claim and complete against the same queue and write into the
+same vault, so the result is one deduplicated wiki no matter how many
+machines fed it.
+
+<pre class="mermaid">
+flowchart TD
+  M1["Machine 1
+scans browser history"] <--> Q[archivore-queue D1]
+  M2["Machine 2
+scans browser history"] <--> Q
+  M3["Machine 3
+scans browser history"] <--> Q
+  M1 --> V[shared vault]
+  M2 --> V
+  M3 --> V
+  V --> S[qmd search]
+</pre>
 
 None of it publishes anything yet. Archivore's second half — turning
 weeks of captured reading into actual essays, using Claude — stays on
