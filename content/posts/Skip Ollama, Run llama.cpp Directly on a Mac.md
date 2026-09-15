@@ -1,7 +1,6 @@
 ---
-title: <% tp.file.title %>
+title: Skip Ollama, Run llama.cpp Directly on a Mac
 date: 2026-09-15
-original_date: 2026-09-15
 draft: false
 tags:
   - ai-drafted

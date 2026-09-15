@@ -1,7 +1,7 @@
 ---
-title: <% tp.file.title %>
-date: 2026-08-31T10:56:10-04:00
-original_date: 08/17/2026
+title: Meta-Harnesses for Agentic Coding Harnessess
+date: 2026-08-17
+original_date: 2026-08-17
 draft: true
 tags:
   - ai-coding-tools
@@ -32,5 +32,3 @@ However, I'm open to evolving my kit.  Here's some interesting other tools that 
 - herdr
 - Zellij
 - TMUX - With custom 
-
-<% tp.file.move("1 Projects/taude.xyz Blog/posts/" + tp.file.title) %>

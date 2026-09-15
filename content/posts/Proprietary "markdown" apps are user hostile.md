@@ -1,5 +1,5 @@
 ---
-title: <% tp.file.title %>
+title: 'Proprietary "markdown" apps are user hostile'
 date: 2026-08-31T10:56:10-04:00
 original_date: ""
 draft: true
@@ -19,9 +19,3 @@ My goal for all future companies I work at, much like my goal of expunging ever 
 Current Workarounds for Atlassian Products: It seems in *most* cases, rendering the markdown, even with simple tables, and then doing an OS-level copy/paste will get you 85% of the way there.
 
 Current Slack workarounds: a) embedd a snipped of Markdown type b) convert with Claude (which sometimes works, and sometimes doesn't ), 
-
-
-
-
-
-<% tp.file.move("1 Projects/taude.xyz Blog/posts/" + tp.file.title) %>

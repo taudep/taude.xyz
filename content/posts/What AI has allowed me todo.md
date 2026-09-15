@@ -1,7 +1,7 @@
 ---
-title: <% tp.file.title %>
+title: What AI has allowed me todo
 date: 2026-07-31
-original_date: 07/31/206
+original_date: 2026-07-31
 draft: true
 tags:
   - ai-hype
@@ -15,5 +15,3 @@ slug: "what-ai-has-allowed-me-todo"
 
 
 LLMS are great for writing, less useful for communicating effectively and thinking.  Writing is thinking and why Amazon's one-pager is such a successful way
-
-<% tp.file.move("1 Projects/taude.xyz Blog/posts/" + tp.file.title) %>
