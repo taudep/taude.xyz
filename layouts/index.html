@@ -35,7 +35,11 @@
     input.checked = localStorage.getItem('taude-hide-ai') === 'true';
     input.addEventListener('change', function () {
       var hide = input.checked;
-      document.documentElement.toggleAttribute('data-hide-ai', hide);
+      if (hide) {
+        document.documentElement.setAttribute('data-hide-ai', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-hide-ai');
+      }
       localStorage.setItem('taude-hide-ai', hide ? 'true' : 'false');
     });
   })();
