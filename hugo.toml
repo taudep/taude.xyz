@@ -33,6 +33,11 @@ buildExpired = false
   sidebarBio = "Taude — notes on AI, software, and management, plus whatever else sticks."
 
   [[params.pinnedLinks]]
+    title = "Claude Code Quick Tips"
+    url = "/tags/ai-tip/"
+    icon = "ai"
+
+  [[params.pinnedLinks]]
     title = "Today I Learned..."
     url = "/til/"
 
