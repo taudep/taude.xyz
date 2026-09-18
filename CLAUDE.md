@@ -116,7 +116,25 @@ any note's frontmatter adds it to the sidebar's "Pinned" list
 (`layouts/_partials/sidebar.html`, which also merges in static
 `params.pinnedLinks` from `hugo.toml`); `original_date` in frontmatter
 triggers both a `date` overwrite (in `clean_obsidian_links.py`) and the
-backdated banner (in `post_meta.html`).
+backdated banner (in `post_meta.html`). A `params.pinnedLinks` entry in
+`hugo.toml` can also carry `icon = "ai"`, which makes `sidebar.html` render
+the AI sparkle SVG (styled via `.sidebar-pinned-ai-icon` in `custom.css`)
+before the link text — currently used for the "Claude Code Quick Tips"
+pinned link. There's no homepage feature-card version of this anymore
+(removed from `layouts/index.html`); it now lives only in the sidebar.
+
+**Gotcha: renaming or deleting a vault note does not remove it from the
+site.** `scripts/publish.sh`'s rsync into `content/` is one-way and
+additive only — it adds new/changed files but never deletes from
+`content/` when a vault file is renamed or removed. A renamed note
+therefore leaves its old filename behind in `content/` as a live orphan
+with duplicate content under a different slug (this happened for real:
+"Welcome back, Taude." got renamed to "Welcome to taude.xyz.  I'm
+back(-ish)." in the vault, and the stale `content/posts/Welcome back,
+Taude..md` kept publishing as a second copy of the same post until it was
+deleted directly from `content/`). If a post looks duplicated or a deleted
+note is still live, check for a stale file in `content/` directly — the
+vault side alone won't show the problem.
 
 **`clean_obsidian_links.py` internals worth knowing before editing it**:
 - `original_date` → `date` normalization only accepts a small set of
@@ -146,6 +164,20 @@ Both are symlinked into `~/.claude/skills/`, so keep their `SKILL.md`
 instructions in sync with actual script behavior when either changes —
 they're a second, easily-forgotten place the same facts (flags, file
 paths, section list) get restated.
+
+A third content-generating skill, `hacker-news-thread-summary`, lives
+outside this repo in `~/dev/agentfiles/skills/hacker-news-thread-summary/`
+(a separate git repo/remote) rather than here, since it's a general
+writing tool, not taude.xyz-specific tooling — but it writes directly into
+this project's pipeline: it saves a Hacker News thread summary straight
+into the vault's `ai-drafted/` folder as `draft: true`, tagged
+`ai-drafted`, and runs `economist-style` on the draft before saving. It
+bakes in two hard rules worth knowing if you're editing AI-drafted post
+content by hand too: never open with meta-commentary about the source
+("a thread turned into...", "the real lesson is...") — state the subject
+and claim directly in sentence one — and never title or frame something as
+antithesis ("Stop X, Start Y" / "It's not X, it's Y") — state the claim
+directly instead. Both came from real corrections on published drafts.
 
 **Deploy**: `.github/workflows/hugo.yml` builds with a pinned Hugo version
 (`HUGO_VERSION` env var — keep roughly in sync with the locally-installed
