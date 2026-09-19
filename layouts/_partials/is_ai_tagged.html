@@ -1,0 +1,7 @@
+{{- /* Returns true if the page is tagged ai-slop or ai-drafted — the two
+      tags that mark AI-substantially-written content per the About page's
+      disclosure promise. Shared by every section that shows the AI badge
+      (posts, newsletter) and the homepage list. */}}
+{{- $aiTags := slice "ai-slop" "ai-drafted" }}
+{{- $isAI := and .Params.tags (gt (len (.Params.tags | intersect $aiTags)) 0) }}
+{{- return $isAI }}

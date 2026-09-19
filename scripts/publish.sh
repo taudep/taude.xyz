@@ -19,11 +19,11 @@ done
 
 cd "$REPO_DIR"
 
-TARGETS=(content/til content/posts content/quotes content/about.md content/experiments.md)
+TARGETS=(content/til content/posts content/quotes content/newsletter content/about.md content/experiments.md)
 
 # vault_folder:content_dest — multiple vault folders can feed the same
 # content/ section (e.g. ai-drafted/ notes still publish as posts/).
-SECTION_MAP=(til:til posts:posts quotes:quotes ai-drafted:posts)
+SECTION_MAP=(til:til posts:posts quotes:quotes ai-drafted:posts newsletter:newsletter)
 
 for pair in "${SECTION_MAP[@]}"; do
   section="${pair%%:*}"
@@ -77,7 +77,7 @@ while IFS= read -r -d '' md_file; do
   # The grep chain above exits non-zero when a file has no images (the
   # normal case) — `|| true` on the whole pipeline keeps that from
   # tripping `set -e` and killing the script outright.
-done < <(find content/til content/posts content/quotes -name "*.md" -print0 2>/dev/null)
+done < <(find content/til content/posts content/quotes content/newsletter -name "*.md" -print0 2>/dev/null)
 
 python3 "$REPO_DIR/scripts/clean_obsidian_links.py" "${TARGETS[@]}"
 

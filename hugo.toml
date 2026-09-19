@@ -78,19 +78,24 @@ buildExpired = false
   weight = 4
 
 [[menu.main]]
+  name = "Newsletter"
+  url = "/newsletter/"
+  weight = 5
+
+[[menu.main]]
   name = "Quotes"
   url = "/quotes/"
-  weight = 5
+  weight = 6
 
 [[menu.main]]
   name = "Tags"
   url = "/tags/"
-  weight = 6
+  weight = 7
 
 [[menu.main]]
   name = "Search"
   url = "/search/"
-  weight = 7
+  weight = 8
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
