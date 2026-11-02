@@ -137,6 +137,25 @@ Templater syntax to worry about leaving unevaluated.
    see `publish-taude-blog` for the exact `gh run list` polling commands.
    Don't declare success on the push alone.
 
+## Automated (non-interactive) mode
+
+The scheduled Monday run (`scripts/weekly_pipeline.sh` in the archivore repo,
+via `claude -p`, no one at a keyboard) is the **only** case where step 6.2's
+chat-approval gate is skipped. The dispatching prompt says explicitly that
+this is the scheduled automation run — that explicit statement is what
+licenses the exception, not any guess about who's running it. When it says
+so: flip `draft: false` in the vault file yourself before syncing (instead of
+waiting for approval), let `publish.sh` commit and push non-interactively,
+and still run the full step 6.4 deploy-success poll before finishing — never
+skip that just because no one's watching. End the final message with the
+published URL alone on its own line, prefixed `PUBLISHED: `, so the
+orchestrating script can extract it with a simple grep.
+
+Every other invocation — typing `/last-week-in-review` yourself, "write this
+week's newsletter", anything asked in chat — keeps the full review gate.
+This exception is narrow on purpose: it exists because there's no one to ask,
+not because review doesn't matter.
+
 ## Common Mistakes
 
 | Mistake | Fix |
@@ -152,3 +171,5 @@ Templater syntax to worry about leaving unevaluated.
 | Dropping the `ai-drafted` tag because it's not going into `posts/` | Keep it — the AI-banner logic is tag-based, not section-based |
 | Silently narrowing to 7 days when candidates run short | Expand the window (the script already does); reflect the real span in the title/opening |
 | Declaring the newsletter "published" right after `git push` | Poll `gh run list` and confirm the deploy actually succeeded |
+| Unquoted `title:` in front matter when the date range contains a colon (e.g. `title: Last Week in Review: Sep 22 – Oct 11, 2026`) | The colon breaks YAML parsing and fails the Hugo build — always quote the title: `title: "Last Week in Review: ..."` |
+| Auto-publishing (or asking for approval) when the dispatching prompt didn't actually say which one | The prompt's explicit statement decides it, not a guess about whether a human seems to be present — see "Automated (non-interactive) mode" |
