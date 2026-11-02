@@ -12,4 +12,6 @@ I have so many ideas, that I'm now able to experiment with.  I was always first 
 
 I really want to get back to creating a part of the web that's mine, not controlled by any social media algorithm. 
 
+Content drafted with AI will be marked as such. This will be a useful place to drop my notes.
+
 Be sure to checkout my [About](/about/) page.
