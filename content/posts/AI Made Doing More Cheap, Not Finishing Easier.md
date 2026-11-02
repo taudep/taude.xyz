@@ -7,7 +7,7 @@ slug: "ai-made-doing-more-cheap"
 ---
 This one's ai-slop, as advertised on the [about page](/about/). The article
 came out of archivore's capture feed, and an AI wrote the recap around it
-in a session that lasted about a minute. So take the opinions below as a
+in a short Claude Code session. So take the opinions below as a
 summary of someone else's argument, not a report from my own week.
 
 The source is Orestis Ioannou's
@@ -62,18 +62,20 @@ them.
 
 ## Session stats
 
-Pulled from the session transcript with `session_usage.py`, captured just
-before writing this post:
+Pulled from the session transcript with `session_usage.py`. The first
+version of this post used numbers captured before it was written, which
+undercounted the session. These cover the whole session, including the
+follow-up work (a newsletter, fact-checking its blurbs and this refresh):
 
-- Assistant messages with usage data: 8
-- Input tokens: 20
-- Output tokens: 5,194
-- Cache-creation tokens: 88,676
-- Cache-read tokens: 246,010
-- Total, all categories: 339,900
-- Session span: about one minute (16:15:20 to 16:16:22 UTC)
+- Assistant messages with usage data: 89
+- Input tokens: 232
+- Output tokens: 51,638
+- Cache-creation tokens: 381,818
+- Cache-read tokens: 6,451,559
+- Total, all categories: 6,885,247
+- Session span: Oct 30, 16:15 UTC to Nov 2, 02:43 UTC
 
-Cache-read tokens bill far cheaper than fresh input, so the 339,900 total
-overstates the cost if read as a plain sum. These numbers also cover only
-the part of the session before the post was written, so they undercount
-the full run.
+The span is wall-clock time with the session left open between requests,
+so it says little about active working time. Cache-read tokens bill far
+cheaper than fresh input, so the 6.9 million total overstates the cost if
+read as a plain sum. About 94 percent of it is cache reads.
