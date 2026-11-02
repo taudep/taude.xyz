@@ -17,34 +17,34 @@ which also had a [Hacker News thread](https://news.ycombinator.com/item?id=50257
 ## The argument
 
 Ioannou is a VP of Technology who, on paper, should be writing less code
-than ever. He pulled his GitHub contribution history back to 2019 and found
-the opposite. His Principal Engineer years averaged 114 contributions a
-month, against 173 as a full-stack engineer. In 2026 he's back at
+than ever. A pull of their GitHub contribution history back to 2019 showed
+the opposite. The Principal Engineer years averaged 114 contributions a
+month, against 173 in the full-stack engineer years. 2026 is back at
 full-stack pace, with August the busiest month on record at 427. The
 median weekday went from 3 or 4 contributions to 7. Weekdays with no
 activity fell from 40–46 a year to 18 so far.
 
-His explanation isn't that the tools are slow or bad. He uses agents for
-all his engineering work and likes them. The problem is that cheap
-implementation removes the friction that used to stop him saying yes. Bugs
-he'd have left alone, patterns worth cleaning up and half-formed ideas all
-become "just a quick prompt". Agents didn't make his workload faster to
-finish; they made it easy to give himself a much bigger one.
+Ioannou doesn't blame slow or bad tools. Agents do all of their
+engineering work now, and they like it that way. The problem is that cheap
+implementation removes the friction that used to stop a yes. Bugs that
+would have been left alone, patterns worth cleaning up and half-formed
+ideas all become "just a quick prompt". Agents didn't make the existing
+workload faster to finish; they made it easy to take on a much bigger one.
 
 ## Why it's tiring
 
-He used to hold two or three serious tasks a week, one at a time. Now
-several agents run in parallel, and each needs him only sometimes: a
+The old load was two or three serious tasks a week, one at a time. Now
+several agents run in parallel, and each needs attention only sometimes: a
 question, a plan to approve, a diff to read. The cost is the context
 switch each time, reloading a different problem, repository and set of
-decisions. His summary is that capacity to implement ideas has grown much
-faster than his capacity to think about them.
+decisions. Ioannou's summary is that the capacity to implement ideas has
+grown much faster than the capacity to think about them.
 
-He also describes the pattern as bursts. A new model or workflow makes
-something possible, he starts more agents and says yes to more experiments,
-and a few weeks later reviewing catches up with him and he pulls back. He
-counts three of these cycles since January. Even the "low" months now sit
-above his old baseline.
+The pattern comes in bursts. A new model or workflow makes something
+possible, more agents start and more experiments get a yes, and a few
+weeks later the reviewing catches up and Ioannou pulls back. There have
+been three of these cycles since January. Even the "low" months now sit
+above the old baseline.
 
 ## What I'd take from it
 
