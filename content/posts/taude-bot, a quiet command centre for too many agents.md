@@ -1,6 +1,6 @@
 ---
 title: taude-bot, a quiet command centre for too many agents
-date: 2026-11-11T10:15:00-05:00
+date: 2026-11-11T09:55:00-05:00
 draft: false
 tags:
   - ai-drafted
@@ -69,22 +69,22 @@ The data is invented and the employer details are scrubbed.
 The Work app. Sessions on both laptops on the left, the selected session's
 wrap-up on the right:
 
-![taude-bot Work app mockup](taude-bot-work.png)
+![taude-bot Work app mockup](/posts/taude-bot-work.png)
 
 The Inbox app, where triaged tabs land. Select a batch with the space bar and
 send it to Obsidian, mark it done, or drop it:
 
-![taude-bot Inbox app mockup](taude-bot-inbox.png)
+![taude-bot Inbox app mockup](/posts/taude-bot-inbox.png)
 
 The browser extension and the notifications. One quiet banner on Friday
 afternoon, no sounds, no modal windows:
 
-![taude-bot browser extension and notification mockups](taude-bot-extension.png)
+![taude-bot browser extension and notification mockups](/posts/taude-bot-extension.png)
 
 And what actually lands in the vault: one commented YAML config, one markdown
 file per triage run, one per session:
 
-![taude-bot vault files mockup](taude-bot-vault.png)
+![taude-bot vault files mockup](/posts/taude-bot-vault.png)
 
 ## How it fits together
 
