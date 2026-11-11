@@ -2,7 +2,7 @@
 
 {{- $pages := where site.RegularPages "Section" "posts" }}
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
-{{- $paginator := .Paginate $pages }}
+{{- $paginator := .Paginate $pages 50 }}
 
 <div class="ai-disclaimer">
   <svg class="ai-disclaimer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
