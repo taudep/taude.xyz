@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>taude-bot: one quiet place for every agent, tab and loose end</title>
+<meta name="description" content="taude-bot keeps track of AI coding sessions, browser tabs and routine agent workflows across your machines, in plain markdown, driven from the keyboard.">
+<meta property="og:title" content="taude-bot">
+<meta property="og:description" content="One quiet place for every agent, tab and loose end.">
+<meta property="og:image" content="https://taude.xyz/product/img/work.jpg">
+<link rel="icon" href="img/taude-classic-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#09243A; --deep:#061827; --cream:#F8F1DE; --orange:#F04B16; --amber:#F5A900; --teal:#12A5A4;
+  --ink:#e9e3d2; --muted:#9fb2c3; --line:#173a57;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--deep);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;color:var(--ink);font:400 18px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--amber);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+.prose{max-width:62ch}
+
+/* top */
+.bar{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.mark{display:flex;align-items:center;gap:12px;font:800 22px/1 var(--display);color:var(--cream);text-decoration:none;letter-spacing:-.01em}
+.mark img{width:36px;height:36px;border-radius:9px}
+.bar nav a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:16px}
+.bar nav a:hover{color:var(--cream)}
+
+/* hero */
+.hero{background:var(--navy);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 40px}
+h1{font:800 clamp(44px,6.4vw,84px)/.98 var(--display);letter-spacing:-.035em;color:var(--cream);margin:0 0 26px}
+.lede{font-size:21px;line-height:1.55;color:#d9d3c2;max-width:34ch;margin:0}
+.orbit{position:relative;aspect-ratio:1;max-width:420px;justify-self:end;width:100%}
+.orbit svg{width:100%;height:100%}
+.orbit .dot{transform-origin:256px 256px;animation:land 1.1s cubic-bezier(.2,.8,.2,1) both}
+.orbit .d2{animation-delay:.08s}.orbit .d3{animation-delay:.16s}.orbit .d4{animation-delay:.24s}.orbit .d5{animation-delay:.32s}.orbit .d6{animation-delay:.4s}
+@keyframes land{from{opacity:0;transform:rotate(-40deg) scale(.6)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.orbit .dot{animation:none}}
+
+/* app switcher */
+.switch{padding:8px 0 64px}
+.keys{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px}
+.keys p{margin:0 14px 0 0;color:var(--muted);font-size:16px}
+.cap{font:500 15px/1 var(--mono);color:var(--cream);background:#0f3150;border:1px solid #24527a;border-bottom-width:4px;border-radius:9px;padding:10px 14px 8px;cursor:pointer;display:inline-flex;gap:10px;align-items:baseline;transition:transform .06s}
+.cap span{font-family:var(--body);font-size:15px;color:var(--muted)}
+.cap[aria-pressed="true"]{background:var(--amber);border-color:#b57d00;color:var(--navy)}
+.cap[aria-pressed="true"] span{color:var(--navy)}
+.cap:active,.cap.hit{transform:translateY(2px);border-bottom-width:2px}
+.screen{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000c;background:#071c2e}
+.screen img{width:100%;aspect-ratio:1280/620;object-fit:cover;object-position:top}
+.caption{color:var(--muted);font-size:16px;margin:14px 0 0;min-height:1.6em}
+
+/* sections */
+section.feature{padding:96px 0;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:start}
+.row.flip{grid-template-columns:7fr 5fr}
+.row.flip .text{order:2}
+h2{font:800 clamp(32px,3.6vw,48px)/1.04 var(--display);letter-spacing:-.025em;color:var(--cream);margin:0 0 18px}
+h3{font:600 21px/1.3 var(--display);color:var(--cream);margin:0 0 4px}
+.feature p{margin:0 0 18px}
+.list{list-style:none;padding:0;margin:26px 0 0}
+.list li{padding:16px 0 16px 26px;border-top:1px solid var(--line);position:relative}
+.list li::before{content:"";position:absolute;left:0;top:24px;width:11px;height:11px;border-radius:50%;background:var(--c,var(--teal))}
+.list li p{margin:0;color:#cfd8df;font-size:17px}
+.shot{border-radius:12px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px -30px #000b}
+.shot+.shot{margin-top:22px}
+figure{margin:0}
+figcaption{color:var(--muted);font-size:15px;margin-top:10px}
+.c-orange{--c:var(--orange)}.c-amber{--c:var(--amber)}.c-teal{--c:var(--teal)}
+
+/* keyboard */
+.kb{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0;border-top:1px solid var(--line);margin-top:30px}
+.kb div{display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.kb kbd{font:500 14px/1 var(--mono);color:var(--cream);background:#0f3150;border:1px solid #24527a;border-bottom-width:3px;border-radius:7px;padding:7px 9px 5px;min-width:34px;text-align:center}
+
+/* light section */
+.paper{background:var(--cream);color:var(--navy)}
+.paper h2,.paper h3{color:var(--navy)}
+.paper .list li{border-color:#e2d8bd}
+.paper .list li p{color:#2b4257}
+.paper a{color:#b23a0e}
+.paper figcaption{color:#5d7183}
+
+/* roadmap */
+ol.phases{list-style:none;counter-reset:p;padding:0;margin:30px 0 0}
+ol.phases li{counter-increment:p;display:grid;grid-template-columns:56px 1fr;gap:6px 18px;padding:20px 0;border-top:1px solid var(--line)}
+ol.phases li::before{content:counter(p);font:800 34px/1 var(--display);color:var(--amber);grid-row:span 2}
+ol.phases li.now::before{color:var(--teal)}
+ol.phases p{margin:0;color:#cfd8df}
+
+footer{padding:56px 0 72px;color:var(--muted);font-size:16px}
+footer .mark{font-size:18px;margin-bottom:14px}
+
+@media (max-width:860px){
+  .hero-grid,.row,.row.flip{grid-template-columns:1fr}
+  .row.flip .text{order:0}
+  .orbit{max-width:260px;justify-self:start;order:-1}
+  section.feature{padding:68px 0}
+  .bar nav{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="bar">
+      <a class="mark" href="/product/"><img src="img/taude-classic-dark.svg" alt="">taude-bot</a>
+      <nav aria-label="Sections"><a href="#sessions">Sessions</a><a href="#tabs">Tabs</a><a href="#workflows">Workflows</a><a href="#files">Files</a><a href="#roadmap">Roadmap</a></nav>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <h1>One quiet place for every agent, tab and loose end.</h1>
+        <p class="lede">taude-bot keeps track of AI coding sessions, browser tabs and the routine work agents do for you, across every machine you use. It runs on your own computer, writes plain markdown, and stays out of the way.</p>
+      </div>
+      <div class="orbit" aria-hidden="true">
+        <svg viewBox="0 0 512 512">
+          <g fill="none" stroke="#F8F1DE" stroke-width="10" stroke-linecap="round">
+            <ellipse cx="256" cy="256" rx="176" ry="91"/>
+            <ellipse cx="256" cy="256" rx="176" ry="91" transform="rotate(60 256 256)"/>
+            <ellipse cx="256" cy="256" rx="176" ry="91" transform="rotate(-60 256 256)"/>
+          </g>
+          <circle cx="256" cy="256" r="78" fill="#F8F1DE"/>
+          <path d="M256 190 C268 231 281 244 322 256 C281 268 268 281 256 322 C244 281 231 268 190 256 C231 244 244 231 256 190Z" fill="#09243A"/>
+          <circle class="dot d1" cx="256" cy="68" r="28" fill="#F04B16"/>
+          <circle class="dot d2" cx="418" cy="162" r="28" fill="#F5A900"/>
+          <circle class="dot d3" cx="418" cy="350" r="28" fill="#12A5A4"/>
+          <circle class="dot d4" cx="256" cy="444" r="28" fill="#F5A900"/>
+          <circle class="dot d5" cx="94" cy="350" r="28" fill="#F04B16"/>
+          <circle class="dot d6" cx="94" cy="162" r="28" fill="#12A5A4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="switch">
+      <div class="keys" role="group" aria-label="App screens">
+        <p>It's driven from the keyboard. Press 1 to 5 here too.</p>
+        <button class="cap" data-i="0" aria-pressed="true">1 <span>Work</span></button>
+        <button class="cap" data-i="1" aria-pressed="false">2 <span>Handbook</span></button>
+        <button class="cap" data-i="2" aria-pressed="false">3 <span>Tasks</span></button>
+        <button class="cap" data-i="3" aria-pressed="false">4 <span>Mngr</span></button>
+        <button class="cap" data-i="4" aria-pressed="false">5 <span>Inbox</span></button>
+      </div>
+      <div class="screen"><img id="screen" src="img/work.jpg" alt="The Work app: sessions on both laptops, with the selected session's build notes, git state and remaining to-dos" width="1280" height="620"></div>
+      <p class="caption" id="caption" aria-live="polite">Work: every agent session on both laptops, and what each one left behind.</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="feature" id="sessions">
+  <div class="wrap row">
+    <div class="text">
+      <h2>Know what every session did, and pick up where it stopped.</h2>
+      <p class="prose">Run thirty agent sessions at once and the terminal tabs stop meaning anything. taude-bot keeps the record instead.</p>
+      <ul class="list">
+        <li class="c-teal"><h3>A wrap-up for every session</h3><p>When a Claude Code, pi or opencode session ends, it records what was built, the artifacts it produced, and what the agent thinks is still left to do.</p></li>
+        <li class="c-orange"><h3>Git state at a glance</h3><p>Uncommitted changes, commits not yet pushed, PRs open or waiting to merge, and worktrees that are safe to clean up.</p></li>
+        <li class="c-amber"><h3>Reopen with one key</h3><p>Press enter on any session to open Ghostty in the right folder with the agent resumed and its memory intact.</p></li>
+        <li class="c-teal"><h3>Ask what to do next</h3><p>A side panel answers from your own records: past wrap-ups, open follow-ups, PR state and the plan behind the project. Use any model you like.</p></li>
+      </ul>
+    </div>
+    <figure>
+      <div class="shot"><img src="img/work.jpg" alt="Work app with a selected session showing what was built, git state, to-dos and artifacts" loading="lazy" width="1280" height="620"></div>
+      <figcaption>Sessions from the work and personal laptops, side by side.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="feature" id="tabs">
+  <div class="wrap row flip">
+    <figure>
+      <div class="shot"><img src="img/inbox.jpg" alt="Inbox app listing reading items with two selected and a bar of bulk actions" loading="lazy" width="1280" height="620"></div>
+      <div class="shot"><img src="img/extension.jpg" alt="Browser extension popups and macOS notifications for marking pages and triaging tabs" loading="lazy" width="1300" height="960"></div>
+      <figcaption>The Inbox, and the extension that fills it.</figcaption>
+    </figure>
+    <div class="text">
+      <h2>Close a hundred tabs without losing one.</h2>
+      <p class="prose">Every evening, and every Friday afternoon, taude-bot sweeps your Chrome and Firefox tabs into lists. Then it closes them. Pinned tabs stay put.</p>
+      <ul class="list">
+        <li class="c-orange"><h3>Sorted by what they ask of you</h3><p>Tickets and pages you were editing become to-dos. Pages you were only reading become follow-ups. Hacker News threads go to reading, story and comments as one item. YouTube goes to watch.</p></li>
+        <li class="c-amber"><h3>Nothing closes before it's saved</h3><p>The list is written and read back first. Every sweep keeps a record of what it closed, and one key reopens the lot.</p></li>
+        <li class="c-teal"><h3>Mark anything for later</h3><p>Press Option-M on any page to send it to your reading archive and personal wiki, with a note on why it caught your eye.</p></li>
+        <li class="c-teal"><h3>Prune in seconds</h3><p>Select a batch with the space bar, then send it to Obsidian, mark it done, or drop it. Old lists archive themselves after four weeks.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="workflows">
+  <div class="wrap row">
+    <div class="text">
+      <h2>The routine work runs on a schedule.</h2>
+      <p class="prose">Each workflow is a skill an agent can run, started by a key or by the clock. You see every run, and nothing public goes out without you.</p>
+      <ul class="list">
+        <li class="c-amber"><h3>Daily and weekly summaries</h3><p>A short note each evening. At the end of the week, a list of only what's still unfinished, and what you accomplished, project by project.</p></li>
+        <li class="c-teal"><h3>Shutdowns, archive processing, newsletters</h3><p>Daily and weekly shutdowns, turning your reading into wiki pages, drafting the weekly roundup. Add your own.</p></li>
+        <li class="c-orange"><h3>A review pile for anything public</h3><p>Blog posts, LinkedIn and X drafts wait for your approval. taude-bot suggests them from what you actually shipped.</p></li>
+        <li class="c-teal"><h3>Quiet reminders</h3><p>Reminders are to-do items with a time. When one comes due you get one small notification, never a window in your way.</p></li>
+      </ul>
+    </div>
+    <figure>
+      <div class="shot"><img src="img/tasks.jpg" alt="Tasks app listing workflows with schedules and the weekly shutdown's steps and last run" loading="lazy" width="1280" height="620"></div>
+      <figcaption>Workflows, their schedules, and how the last run went.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="feature paper" id="files">
+  <div class="wrap row flip">
+    <figure>
+      <div class="shot"><img src="img/vault.jpg" alt="The TAUDE folder in Obsidian showing the commented YAML config file" loading="lazy" width="1280" height="800"></div>
+      <figcaption>The TAUDE folder in Obsidian, with its commented config.</figcaption>
+    </figure>
+    <div class="text">
+      <h2>Your data is markdown in your own vault.</h2>
+      <p class="prose">Plans, session logs, task lists and the handbook live in an Obsidian folder that syncs between your machines. Open any of it without the app.</p>
+      <ul class="list">
+        <li class="c-teal"><h3>Built for more than one machine</h3><p>Each machine writes only its own files, so sync never has to merge anything. The app reads them all and shows one picture.</p></li>
+        <li class="c-amber"><h3>One config file that explains itself</h3><p>Plain YAML with a comment on every setting. One section applies everywhere; each machine can override it, so work-only tools stay on the work laptop.</p></li>
+        <li class="c-orange"><h3>Your skills, everywhere</h3><p>Shared skills from a public repo and private ones from your vault, installed into every agent on every machine.</p></li>
+        <li class="c-teal"><h3>Any ticket system</h3><p>One ticket view over whichever tracker each machine uses: Jira at work, Linear at home, others later.</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="keys">
+  <div class="wrap">
+    <h2>Fast, local, and on the keyboard.</h2>
+    <p class="prose">A Go backend in a lightweight native window for Mac, Windows and Linux. A small SQLite database on each machine keeps it quick. Nothing runs in the cloud, and the same keys work everywhere in the app.</p>
+    <div class="kb">
+      <div><kbd>1</kbd><kbd>5</kbd><span>switch apps</span></div>
+      <div><kbd>[</kbd><kbd>]</kbd><span>switch sub-tabs</span></div>
+      <div><kbd>j</kbd><kbd>k</kbd><span>move through a list</span></div>
+      <div><kbd>space</kbd><span>select for a bulk action</span></div>
+      <div><kbd>↵</kbd><span>open or reopen</span></div>
+      <div><kbd>u</kbd><span>undo, or reopen closed tabs</span></div>
+      <div><kbd>/</kbd><span>search everything</span></div>
+      <div><kbd>?</kbd><span>show every key</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="roadmap">
+  <div class="wrap">
+    <h2>Where it stands.</h2>
+    <p class="prose">taude-bot is a personal tool being built in the open with Claude Code. The design and clickable mockups are done; the screenshots on this page come from them. The phases, in order:</p>
+    <ol class="phases">
+      <li class="now"><h3>Tab triage, the browser extension, and daily and weekly summaries</h3><p>Being built now.</p></li>
+      <li><h3>Session tracking</h3><p>Wrap-ups for every agent session, the project index, and the "what next?" panel.</p></li>
+      <li><h3>The full app</h3><p>The Work, Handbook and Tasks apps in a native window, with every action a key away.</p></li>
+      <li><h3>Workflows and reminders</h3><p>Any skill on a schedule, the review pile, and suggestions.</p></li>
+      <li><h3>Setup on any machine</h3><p>One repo and one install script for the whole agent tool stack.</p></li>
+      <li><h3>Ticket systems</h3><p>Jira and Linear behind one view, and room for more.</p></li>
+    </ol>
+    <p class="prose" style="margin-top:30px">Read how it was designed in <a href="/posts/taude-bot-a-quiet-command-centre-for-too-many-agents/">the session write-up</a>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="mark" href="/"><img src="img/taude-classic-dark.svg" alt="">taude.xyz</a>
+    <p>taude-bot rhymes with Claude. It's built by Todd, mostly by talking to agents, and this page was written with one, as the <a href="/about/">about page</a> promises to say.</p>
+  </div>
+</footer>
+
+<script>
+const shots=[
+ ["work","Work: every agent session on both laptops, and what each one left behind.","The Work app: sessions on both laptops, with the selected session's build notes, git state and remaining to-dos"],
+ ["handbook","Handbook: how all the pieces fit together, read straight from your vault.","The Handbook app showing a page about data rules"],
+ ["tasks","Tasks: workflows, schedules, the review pile and reminders.","The Tasks app listing scheduled workflows"],
+ ["mngr","Mngr: tickets, a daily journal and to-dos from across your notes.","The Mngr app listing tickets"],
+ ["inbox","Inbox: tabs sorted into to-dos, follow-ups, reading and watching.","The Inbox app listing reading items with two selected"],
+];
+const caps=[...document.querySelectorAll(".cap")],img=document.getElementById("screen"),cap=document.getElementById("caption");
+shots.forEach(s=>{const i=new Image();i.src=`img/${s[0]}.jpg`});
+function show(i){caps.forEach((c,j)=>c.setAttribute("aria-pressed",String(i===j)));img.src=`img/${shots[i][0]}.jpg`;img.alt=shots[i][2];cap.textContent=shots[i][1]}
+caps.forEach((c,i)=>c.addEventListener("click",()=>show(i)));
+document.addEventListener("keydown",e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey||/input|textarea/i.test(e.target.tagName))return;
+  const n=+e.key; if(n>=1&&n<=5){show(n-1);const c=caps[n-1];c.classList.add("hit");setTimeout(()=>c.classList.remove("hit"),120)}
+});
+</script>
+</body>
+</html>
