@@ -18,6 +18,8 @@ uncommitted changes, which had PRs waiting, and which the agent considered
 finished. My browser was worse: a hundred tabs, each one a task I meant to do
 or an article I meant to read, none of them findable.
 
+There is now a [product page for taude-bot](/product/) listing every feature.
+
 So I sat down with Claude to design the thing I wanted instead. It is called
 Taude (it rhymes with Claude, duh). The brief was one word
 long: quiet. It should keep track of everything without a lot of fanfare.
